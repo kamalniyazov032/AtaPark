@@ -173,6 +173,19 @@ groups.forEach(([title,subtitle,icon,fieldIds])=>{
 const card=document.createElement('section');card.className='product-group';
 card.innerHTML='<div class="product-group-head"><span class="product-group-icon"><svg viewBox="0 0 24 24">'+icons[icon]+'</svg></span><div><strong>'+title+'</strong><small>'+subtitle+'</small></div></div><div class="product-group-fields"></div>';
 fieldIds.forEach(id=>{const field=elements[id];if(field)card.querySelector('.product-group-fields').appendChild(field)});
+if(icon==='design'){
+const row=card.querySelector('.product-group-fields');
+row.classList.add('design-five-inline');
+row.style.setProperty('display','grid','important');
+row.style.setProperty('grid-template-columns','repeat(5,minmax(0,1fr))','important');
+row.style.setProperty('gap','10px','important');
+row.querySelectorAll(':scope > .field').forEach(field=>{
+field.style.setProperty('width','100%','important');
+field.style.setProperty('max-width','none','important');
+field.style.setProperty('min-width','0','important');
+field.style.setProperty('flex','none','important');
+});
+}
 left.appendChild(card)
 });
 const side=document.createElement('aside');side.className='product-side';
@@ -229,4 +242,12 @@ display:block!important;grid-column:auto!important;grid-row:auto!important;flex:
 @media(min-width:751px) and (max-width:1250px){
 .wizard-pane[data-step="1"] .product-workspace{grid-template-columns:minmax(0,1fr)!important}
 }
+</style><style>
+/* Dizayn ölçüləri: 5 xana — real DOM üzərində 5 sütun */
+.wizard-pane[data-step="1"] .product-workspace{grid-template-columns:minmax(0,1fr) 250px}
+.wizard-pane[data-step="1"] .design-five-inline{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.wizard-pane[data-step="1"] .design-five-inline>.field{width:100%!important;max-width:none!important;min-width:0!important;flex:none!important}
+.wizard-pane[data-step="1"] .design-five-inline label{font-size:11px!important;line-height:1.25;min-height:28px}
+@media(max-width:1250px){.wizard-pane[data-step="1"] .product-workspace{grid-template-columns:minmax(0,1fr)!important}}
+@media(max-width:600px){.wizard-pane[data-step="1"] .design-five-inline{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style></body></html>
