@@ -54,17 +54,12 @@
 .wizard-pane[data-step="1"] .product-group-fields>.field{width:100%;max-width:none;min-width:0;flex:none;grid-column:auto;grid-row:auto}
 .wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2>.field.col-2{grid-column:auto;grid-row:auto;width:100%;max-width:none;min-width:0}
-.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{
-display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;
-}
-.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field{
-grid-column:span 3;grid-row:auto;width:100%;min-width:0;max-width:none;
-}
-.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field:nth-child(n+5){grid-column:span 4}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field{grid-column:auto;grid-row:auto;min-width:0;width:100%;max-width:none}
 .wizard-pane[data-step="1"] .product-group-fields .field input,.wizard-pane[data-step="1"] .product-group-fields .field select{width:100%;min-width:0;box-sizing:border-box}
 @media(max-width:800px){.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{grid-template-columns:repeat(2,minmax(0,1fr))}.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field,.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field:nth-child(n+5){grid-column:auto}}
-
+@media(max-width:900px){.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:650px){.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2,.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head>
 <body>
 <div class="layout">
@@ -132,7 +127,7 @@ print:'<path d="M6 9V3h12v6M6 18H4V9h16v9h-2M6 15h12v6H6zM17 12h.01"/>'
 };
 const groups=[
 ['Dizayn ölçüləri','Bir etiketin ölçüsü və sayı','design',['designWidth','designLength','designCount','repeatWidth','repeatLength','colorCount']],
-['Material və Çap məlumatı','Xammal, qalınlıq və çap parametrləri','material',['materialWidth','rawStock','orderThickness','layerCount','printType','zed','qazan']]
+['Material və Çap məlumatı','Xammal, qalınlıq və çap parametrləri','material',['materialWidth','rawStock','orderThickness','zed','qazan','layerCount','printType']]
 ];
 const workspace=document.createElement('div');workspace.className='product-workspace';
 const left=document.createElement('div');left.className='product-left';
