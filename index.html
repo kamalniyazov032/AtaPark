@@ -252,4 +252,13 @@ if(codes.includes(old.value))select.value=old.value;
 old.replaceWith(select);
 });
 });
+</script><script>
+document.addEventListener('DOMContentLoaded',function(){
+const old=document.getElementById('colorNames');if(!old)return;
+const select=document.createElement('select');select.id='colorNames';select.className=old.className;
+const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Seçin';select.appendChild(placeholder);
+["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"].forEach(function(v){const option=document.createElement('option');option.value=v;option.textContent=v;select.appendChild(option)});
+if(["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"].includes(old.value))select.value=old.value;
+old.replaceWith(select);
+});
 </script></body></html>
