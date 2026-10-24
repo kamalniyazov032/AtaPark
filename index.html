@@ -290,4 +290,21 @@ font-size:9px!important;padding:3px 4px!important;right:4px!important;
 @media(max-width:600px){
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+</style><style id="material-width-correction">
+/* Material: xammal dar, qat sayı geniş; dörd sahə eyni sətirdə */
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields{
+display:grid!important;
+grid-template-columns:minmax(0,1.05fr) minmax(0,.72fr) minmax(0,.95fr) minmax(0,1.28fr)!important;
+gap:10px!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields>.field{
+grid-column:auto!important;grid-row:auto!important;min-width:0!important;width:100%!important;max-width:none!important;flex:none!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields>.field input,
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields>.field select{
+width:100%!important;min-width:0!important;box-sizing:border-box!important;
+}
+@media(max-width:600px){
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style></body></html>
