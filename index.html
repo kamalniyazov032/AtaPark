@@ -179,11 +179,13 @@ card.innerHTML='<div class="product-group-head"><span class="product-group-icon"
 fieldIds.forEach(id=>{const field=elements[id];if(field)card.querySelector('.product-group-fields').appendChild(field)});
 if(icon==='design'){
 const row=card.querySelector('.product-group-fields');
-row.classList.add('design-five-inline');
+row.classList.add('design-six-col2');
 row.style.setProperty('display','grid','important');
-row.style.setProperty('grid-template-columns','repeat(5,minmax(0,1fr))','important');
+row.style.setProperty('grid-template-columns','repeat(12,minmax(0,1fr))','important');
 row.style.setProperty('gap','10px','important');
 row.querySelectorAll(':scope > .field').forEach(field=>{
+field.classList.add('col-2');
+field.style.setProperty('grid-column','span 2','important');
 field.style.setProperty('width','100%','important');
 field.style.setProperty('max-width','none','important');
 field.style.setProperty('min-width','0','important');
@@ -343,5 +345,13 @@ display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;
 }
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{
 grid-column:span 2!important;grid-row:auto!important;min-width:0!important;width:100%!important;max-width:none!important;flex:none!important;box-sizing:border-box!important;
+}
+</style><style id="design-six-col2-actual">
+/* Dizayn: hər input col-2, cəmi 12 sütun */
+.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{
+display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;gap:8px!important;
+}
+.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2>.field.col-2{
+grid-column:span 2!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:none!important;flex:none!important;
 }
 </style></body></html>
