@@ -131,7 +131,7 @@ document.addEventListener('change',e=>{if(!e.target.id?.startsWith('xl_'))return
 .product-group-head strong{display:block;font-size:15px;color:#1d2d46}
 .product-group-head small{display:block;color:#8292a9;margin-top:3px;font-size:12px}
 .product-group-fields{display:flex;flex-wrap:wrap;gap:18px 15px;padding:21px 20px 24px}
-.product-left>.product-group:first-child>.product-group-fields{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important;padding:14px 12px 16px!important}
+.product-left>.product-group:first-child>.product-group-fields{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important;padding:14px 12px 16px!important}
 .product-left>.product-group:first-child>.product-group-fields>.field{width:100%!important;max-width:none!important;min-width:0!important;flex:0 1 auto!important}
 .product-left>.product-group:first-child>.product-group-fields .field label{font-size:11px!important;margin-bottom:5px!important}
 .product-left>.product-group:first-child>.product-group-fields input{height:34px!important;min-height:34px!important;font-size:12px!important}
@@ -167,9 +167,9 @@ material:'<path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/>',
 print:'<path d="M6 9V3h12v6M6 18H4V9h16v9h-2M6 15h12v6H6zM17 12h.01"/>'
 };
 const groups=[
-['Dizayn ölçüləri','Bir etiketin ölçüsü və sayı','design',['designWidth','designLength','designCount','repeatWidth','repeatLength']],
+['Dizayn ölçüləri','Bir etiketin ölçüsü və sayı','design',['designWidth','designLength','designCount','repeatWidth','repeatLength','colorCount']],
 ['Material','Xammal və qalınlıq','material',['rawStock','materialWidth','orderThickness','layerCount']],
-['Çap parametrləri','Rəng, zed və qazan','print',['colorCount','printType','zed','qazan']]
+['Çap parametrləri','Çap növü, zed və qazan','print',['printType','zed','qazan']]
 ];
 const workspace=document.createElement('div');workspace.className='product-workspace';
 const left=document.createElement('div');left.className='product-left';
@@ -307,4 +307,9 @@ width:100%!important;min-width:0!important;box-sizing:border-box!important;
 @media(max-width:600px){
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+</style><style id="design-six-fields">
+/* Dizayn ölçüləri: rəng sayı daxil 6 yığcam sahə */
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:7px!important;padding:14px 10px 16px!important}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{min-width:0!important;width:100%!important;max-width:none!important;flex-basis:auto!important}
+@media(max-width:600px){.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style></body></html>
