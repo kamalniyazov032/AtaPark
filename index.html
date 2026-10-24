@@ -240,4 +240,16 @@ if(old.value&&values.includes(old.value))select.value=old.value;
 old.replaceWith(select);
 });
 });
+</script><script>
+document.addEventListener('DOMContentLoaded',function(){
+const codes=["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"];
+['materialCode1','materialCode2','materialCode3'].forEach(function(id){
+const old=document.getElementById(id);if(!old)return;
+const select=document.createElement('select');select.id=id;select.className=old.className;
+const blank=document.createElement('option');blank.value='';blank.textContent='Seçin';select.appendChild(blank);
+codes.forEach(function(value){const option=document.createElement('option');option.value=value;option.textContent=value;select.appendChild(option)});
+if(codes.includes(old.value))select.value=old.value;
+old.replaceWith(select);
+});
+});
 </script></body></html>
