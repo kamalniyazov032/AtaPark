@@ -312,4 +312,16 @@ width:100%!important;min-width:0!important;box-sizing:border-box!important;
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:7px!important;padding:14px 10px 16px!important}
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{min-width:0!important;width:100%!important;max-width:none!important;flex-basis:auto!important}
 @media(max-width:600px){.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style><style id="design-color-count-narrow">
+/* Altı dizayn sahəsi: Rəng sayı daha dar, hamısı bir sırada */
+@media(min-width:601px){
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{
+display:grid!important;
+grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,.55fr)!important;
+gap:7px!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{
+width:100%!important;min-width:0!important;max-width:none!important;grid-column:auto!important;flex:none!important;
+}
+}
 </style></body></html>
