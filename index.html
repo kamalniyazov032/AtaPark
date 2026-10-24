@@ -131,7 +131,7 @@ document.addEventListener('change',e=>{if(!e.target.id?.startsWith('xl_'))return
 .product-group-head strong{display:block;font-size:15px;color:#1d2d46}
 .product-group-head small{display:block;color:#8292a9;margin-top:3px;font-size:12px}
 .product-group-fields{display:flex;flex-wrap:wrap;gap:18px 15px;padding:21px 20px 24px}
-.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 30px)/3)!important;max-width:none!important;flex:0 0 calc((100% - 30px)/3)!important;min-width:0!important}
+.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 30px)/3);max-width:none;min-width:0}
 .wizard-pane[data-step="1"] .product-group-fields .field label{margin-bottom:8px;color:#334761;font-size:12px;font-weight:700}
 .wizard-pane[data-step="1"] .product-group-fields input,.wizard-pane[data-step="1"] .product-group-fields select{height:44px!important;min-height:44px!important;border-radius:9px!important;font-size:14px!important;padding:9px 11px!important}
 .product-input-wrap{position:relative}
@@ -250,4 +250,20 @@ display:block!important;grid-column:auto!important;grid-row:auto!important;flex:
 .wizard-pane[data-step="1"] .design-five-inline label{font-size:11px!important;line-height:1.25;min-height:28px}
 @media(max-width:1250px){.wizard-pane[data-step="1"] .product-workspace{grid-template-columns:minmax(0,1fr)!important}}
 @media(max-width:600px){.wizard-pane[data-step="1"] .design-five-inline{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style><style id="design-row-definitive">
+/* Bütün ekran enlərində (telefon istisna) Dizayn ölçüləri = 5 sütun */
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields,
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields.design-five-inline{
+display:grid!important;
+grid-template-columns:repeat(5,minmax(0,1fr))!important;
+gap:10px!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{
+width:100%!important;min-width:0!important;max-width:none!important;
+flex-basis:auto!important;grid-column:auto!important;grid-row:auto!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field input{width:100%!important;min-width:0!important}
+@media(max-width:600px){
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style></body></html>
