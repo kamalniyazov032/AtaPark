@@ -118,4 +118,70 @@ document.addEventListener('change',e=>{if(!e.target.id?.startsWith('xl_'))return
 .wizard-pane[data-step="1"] #exact-product-fields>.field input,
 .wizard-pane[data-step="1"] #exact-product-fields>.field select{width:100%!important;min-width:0!important;box-sizing:border-box!important}
 @media(max-width:550px){.wizard-pane[data-step="1"] #exact-product-fields>.field{flex:1 1 125px!important;max-width:calc(50% - 7px)!important;width:auto!important}}
-</style></body></html>
+</style><style>
+/* Product step — grouped technical cards and live order summary */
+.wizard-pane[data-step="1"] .panel{border:1px solid #e2eaf5;box-shadow:none}
+.wizard-pane[data-step="1"] .panel-head{padding:18px 22px}
+.product-workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.product-left{display:flex;flex-direction:column;gap:16px;min-width:0}
+.product-group{border:1px solid #e2eaf5;background:white;border-radius:14px;overflow:hidden}
+.product-group-head{display:flex;align-items:center;gap:12px;padding:17px 20px;border-bottom:1px solid #edf1f7}
+.product-group-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:#ebf1ff;color:#315de6;flex:none}
+.product-group-icon svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.product-group-head strong{display:block;font-size:15px;color:#1d2d46}
+.product-group-head small{display:block;color:#8292a9;margin-top:3px;font-size:12px}
+.product-group-fields{display:flex;flex-wrap:wrap;gap:18px 15px;padding:21px 20px 24px}
+.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 30px)/3)!important;max-width:none!important;flex:0 0 calc((100% - 30px)/3)!important;min-width:0!important}
+.wizard-pane[data-step="1"] .product-group-fields .field label{margin-bottom:8px;color:#334761;font-size:12px;font-weight:700}
+.wizard-pane[data-step="1"] .product-group-fields input,.wizard-pane[data-step="1"] .product-group-fields select{height:44px!important;min-height:44px!important;border-radius:9px!important;font-size:14px!important;padding:9px 11px!important}
+.product-input-wrap{position:relative}
+.product-input-wrap input{padding-right:56px!important}
+.product-unit{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:#f1f5fa;color:#53677f;font-size:11px;font-weight:700;padding:4px 7px;border-radius:6px;pointer-events:none}
+.product-side{border:1px solid #e2eaf5;background:#fff;border-radius:14px;overflow:hidden;position:sticky;top:18px}
+.product-side-head{padding:20px 21px;border-bottom:1px solid #edf1f7}
+.product-side-head strong{display:block;font-size:15px}
+.product-side-head small{color:#8b9ab0;font-size:12px}
+.product-side-body{padding:20px}
+.product-preview{height:128px;border:1px solid #dce7f5;background:#f8faff;border-radius:12px;display:grid;place-items:center;margin-bottom:18px}
+.product-preview svg{width:85%;height:100px}
+.product-side-row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px dashed #e6edf5;color:#63758f;font-size:12px}
+.product-side-row:last-child{border:0}
+.product-side-row b{color:#1c2c46;text-align:right}
+@media(max-width:1100px){.product-workspace{grid-template-columns:1fr}.product-side{position:static}}
+@media(max-width:670px){.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 15px)/2)!important;flex-basis:calc((100% - 15px)/2)!important}}
+@media(max-width:430px){.wizard-pane[data-step="1"] .product-group-fields>.field{width:100%!important;flex-basis:100%!important}}
+</style>
+<script>
+(function(){
+const pane=document.querySelector('.wizard-pane[data-step="1"]');
+if(!pane)return;
+const ids=['designWidth','designLength','designCount','repeatWidth','repeatLength','rawStock','materialWidth','orderThickness','layerCount','colorCount','printType','zed','qazan'];
+const elements={};ids.forEach(id=>{const e=document.getElementById(id);if(e)elements[id]=e.closest('.field')});
+const icons={
+design:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11M13 12h4M13 16h4"/>',
+material:'<path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/>',
+print:'<path d="M6 9V3h12v6M6 18H4V9h16v9h-2M6 15h12v6H6zM17 12h.01"/>'
+};
+const groups=[
+['Dizayn ölçüləri','Bir etiketin ölçüsü və sayı','design',['designWidth','designLength','designCount','repeatWidth','repeatLength']],
+['Material','Xammal və qalınlıq','material',['rawStock','materialWidth','orderThickness','layerCount']],
+['Çap parametrləri','Rəng, zed və qazan','print',['colorCount','printType','zed','qazan']]
+];
+const workspace=document.createElement('div');workspace.className='product-workspace';
+const left=document.createElement('div');left.className='product-left';
+groups.forEach(([title,subtitle,icon,fieldIds])=>{
+const card=document.createElement('section');card.className='product-group';
+card.innerHTML='<div class="product-group-head"><span class="product-group-icon"><svg viewBox="0 0 24 24">'+icons[icon]+'</svg></span><div><strong>'+title+'</strong><small>'+subtitle+'</small></div></div><div class="product-group-fields"></div>';
+fieldIds.forEach(id=>{const field=elements[id];if(field)card.querySelector('.product-group-fields').appendChild(field)});
+left.appendChild(card)
+});
+const side=document.createElement('aside');side.className='product-side';
+side.innerHTML='<div class="product-side-head"><strong>Sifariş xülasəsi</strong><small>Daxil etdikcə yenilənir</small></div><div class="product-side-body"><div class="product-preview"><svg viewBox="0 0 260 100" aria-label="Dizayn yerləşmə sxemi"><rect x="8" y="9" width="244" height="82" rx="4" fill="white" stroke="#aabbd4" stroke-dasharray="4 4"/><g fill="#eaf0ff" stroke="#4169ff" stroke-width="1.5"><rect x="24" y="24" width="61" height="22" rx="4"/><rect x="98" y="24" width="61" height="22" rx="4"/><rect x="172" y="24" width="61" height="22" rx="4"/><rect x="24" y="55" width="61" height="22" rx="4"/><rect x="98" y="55" width="61" height="22" rx="4"/><rect x="172" y="55" width="61" height="22" rx="4"/></g></svg></div><div class="product-side-row"><span>Dizayn ölçüsü</span><b id="sumDesign">— × — mm</b></div><div class="product-side-row"><span>Dizayn sayı</span><b id="sumCount">—</b></div><div class="product-side-row"><span>Material eni</span><b id="sumWidth">— mm</b></div><div class="product-side-row"><span>Qat</span><b id="sumLayer">—</b></div><div class="product-side-row"><span>Rəng sayı</span><b id="sumColors">—</b></div></div>';
+workspace.append(left,side);
+pane.replaceChildren(workspace);
+const units={designWidth:'mm',designLength:'mm',designCount:'ədəd',repeatWidth:'sıra',repeatLength:'sıra',materialWidth:'mm',orderThickness:'µm',colorCount:'rəng',zed:'mm',qazan:'mm'};
+Object.entries(units).forEach(([id,unit])=>{const el=document.getElementById(id);if(!el||el.tagName!=='INPUT')return;const wrap=document.createElement('div');wrap.className='product-input-wrap';el.parentNode.insertBefore(wrap,el);wrap.appendChild(el);const suffix=document.createElement('span');suffix.className='product-unit';suffix.textContent=unit;wrap.appendChild(suffix);if(el.placeholder==='mm'||el.placeholder==='µm'||el.placeholder==='1–8')el.placeholder='0'});
+const update=()=>{const value=id=>document.getElementById(id)?.value||'—';document.getElementById('sumDesign').textContent=value('designWidth')+' × '+value('designLength')+' mm';document.getElementById('sumCount').textContent=value('designCount');document.getElementById('sumWidth').textContent=value('materialWidth')+' mm';document.getElementById('sumLayer').textContent=value('layerCount');document.getElementById('sumColors').textContent=value('colorCount')};
+pane.addEventListener('input',update);pane.addEventListener('change',update);update();
+})();
+</script></body></html>
