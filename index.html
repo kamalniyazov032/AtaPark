@@ -193,4 +193,20 @@ pane.addEventListener('input',update);pane.addEventListener('change',update);upd
 @media(min-width:671px) and (max-width:850px){
 .wizard-pane[data-step="1"] .product-group:nth-child(2) .product-group-fields{grid-template-columns:minmax(140px,1.2fr) repeat(2,minmax(95px,.85fr)) minmax(85px,.7fr)!important;gap:10px!important}
 }
+</style><style>
+/* Material: four fields in one row, override legacy flex widths at all desktop sizes */
+@media (min-width:601px){
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{
+display:grid!important;
+grid-template-columns:minmax(0,1.65fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.72fr)!important;
+gap:12px!important;align-items:end!important;
+}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field{
+grid-column:auto!important;grid-row:auto!important;
+width:100%!important;min-width:0!important;max-width:none!important;
+flex:none!important;flex-basis:auto!important;margin:0!important;
+}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field input,
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field select{width:100%!important;min-width:0!important}
+}
 </style></body></html>
