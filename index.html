@@ -184,4 +184,13 @@ Object.entries(units).forEach(([id,unit])=>{const el=document.getElementById(id)
 const update=()=>{const value=id=>document.getElementById(id)?.value||'—';document.getElementById('sumDesign').textContent=value('designWidth')+' × '+value('designLength')+' mm';document.getElementById('sumCount').textContent=value('designCount');document.getElementById('sumWidth').textContent=value('materialWidth')+' mm';document.getElementById('sumLayer').textContent=value('layerCount');document.getElementById('sumColors').textContent=value('colorCount')};
 pane.addEventListener('input',update);pane.addEventListener('change',update);update();
 })();
-</script></body></html>
+</script><style>
+/* Material kartı: dörd sahə bir sətirdə, qat sayı daha dar */
+@media(min-width:671px){
+.wizard-pane[data-step="1"] .product-group:nth-child(2) .product-group-fields{display:grid!important;grid-template-columns:minmax(190px,1.35fr) minmax(110px,.85fr) minmax(110px,.85fr) minmax(100px,.65fr)!important;gap:14px!important;align-items:end}
+.wizard-pane[data-step="1"] .product-group:nth-child(2) .product-group-fields>.field{width:auto!important;max-width:none!important;min-width:0!important;flex:none!important;grid-column:auto!important}
+}
+@media(min-width:671px) and (max-width:850px){
+.wizard-pane[data-step="1"] .product-group:nth-child(2) .product-group-fields{grid-template-columns:minmax(140px,1.2fr) repeat(2,minmax(95px,.85fr)) minmax(85px,.7fr)!important;gap:10px!important}
+}
+</style></body></html>
