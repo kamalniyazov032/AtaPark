@@ -261,4 +261,17 @@ const placeholder=document.createElement('option');placeholder.value='';placehol
 if(["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"].includes(old.value))select.value=old.value;
 old.replaceWith(select);
 });
+</script><script>
+/* KODLAMA vərəqi: Excel data validation seçimləri, ilk məlumat sətri (6) */
+document.addEventListener('DOMContentLoaded',function(){
+const choices={"printMaterial":["-","BOPP Şəffaf","BOPP Mat","BOPP Metalizə","BOPP Sədəf","BOPP Cold seal","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Mat","PET Metalizə","PET Tvist Şəffaf","PET Tvist Metalizə","PET Tvist Ağ","PVC","PP Şəffaf","PE Şəffaf","PE Ağ","Perqament","PP OPAK","ULTRA Clear","PLEN","PP METALİZE","KUŞE"],"material2":["-","POLİTELİN","BOPP Şəffaf","BOPP Metalizə","BOPP Sədəf","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Metalizə","PET Ağ","PE Şəffaf","PE Ağ","Kağız","Falqa","BOPP Mat","Kərə Yağ kağızı","Alüminium falqa","Hohl","Mat lak","BOPP MAT"],"material3":["-","POLİTELİN","BOPP Şəffaf","BOPP Metalizə","BOPP Sədəf","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Metalizə","PET Ağ","PE Şəffaf","PE Ağ","Kağız","Falqa","BOPP Mat","Kərə Yağ kağızı","Alüminium falqa","Hohl","Mat lak","BOPP MAT"],"thickness2":["12","15","18","20","23","25","30","32","35","38","40","42","45","50","52","54","55","60","62","64","65","70","72","74","75","80","82","84","85","90","95","97","100","105","110","114","118","120"],"thickness3":["12","15","18","20","23","25","30","32","35","38","40","42","45","50","52","54","55","60","62","64","65","70","72","74","75","80","82","84","85","90","95","97","100","105","110","114","118","120"],"layerCount":["-","Tək qat","İki qat","Üç qat"],"printType":["-","Alt Çap","Üst Çap","Çapsız"],"underVarnish":["-","Primer"],"overVarnish":["-","OPV Parlaq","OPV Mat"],"productType":["-","Boru","Açıq"],"knife":["-","Tabaka","Taxta","Manyetik"],"perforation":["-","Düz","Formalı"],"rollDirection":["-","Üstə","Altdə"],"rollWeight":["-","15kq","20kq","25kq","30kq","35kq","30sm","40sm","50sm","36 SM","32 sm"],"coreSize":["-","40 mm","76 mm","125 mm","152 mm"],"packConditions":["-","Streç","Paket","Qutu","Paket və Streç","Paket və Qutu"],"plateStatus":["-","Sağlam","Köhnəlmiş","Yararsiz","Yoxdur","Revize"],"approvalMethod":["-","Müştəri gələcək","Pantone ilə","Göndərilən nümunə","Satış nümayəndəsi","Şəkil ilə","Müştəriyə göndəriləcək","Kromalin ilə","Keyfiyyət meneceri"],"materialCode1":["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"],"colorNames":["-","Deepfreeze","Slip","Kaydırıcı","Bəyaz Vakslı","Bəyaz Vakssız","Bəyaz Opak","Bəyaz Slikonlu","White-PET-SPT 7700","White-BOPP-SLM 7010"]};
+Object.entries(choices).forEach(function(entry){
+const old=document.getElementById(entry[0]);if(!old)return;
+const select=document.createElement('select');select.id=old.id;select.className=old.className;
+const blank=document.createElement('option');blank.value='';blank.textContent='Seçin';select.appendChild(blank);
+entry[1].forEach(function(v){const opt=document.createElement('option');opt.value=v;opt.textContent=v;select.appendChild(opt)});
+if(entry[1].includes(old.value))select.value=old.value;
+old.replaceWith(select);
+});
+});
 </script></body></html>
