@@ -336,4 +336,12 @@ width:100%!important;max-width:none!important;min-width:0!important;flex:0 1 aut
 .wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field input{
 width:100%!important;min-width:0!important;box-sizing:border-box!important;
 }
+</style><style id="design-bootstrap-col2">
+/* 12 sütunlu sistem: hər dizayn sahəsi col-2 (6 x 2 = 12) */
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields{
+display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;column-gap:8px!important;row-gap:8px!important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left>.product-group:first-child>.product-group-fields>.field{
+grid-column:span 2!important;grid-row:auto!important;min-width:0!important;width:100%!important;max-width:none!important;flex:none!important;box-sizing:border-box!important;
+}
 </style></body></html>
