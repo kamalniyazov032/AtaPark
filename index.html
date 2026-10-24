@@ -369,4 +369,22 @@ min-width:0!important;
 max-width:none!important;
 flex:none!important;
 }
+</style><style>
+/* FINAL DESIGN ROW FIX */
+.wizard-pane[data-step="1"] .product-workspace .product-left > .product-group:first-child > .product-group-fields.design-six-col2 {
+display:grid !important;
+grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+gap:8px !important;
+}
+.wizard-pane[data-step="1"] .product-workspace .product-left > .product-group:first-child > .product-group-fields.design-six-col2 > .field.col-2 {
+grid-column:auto !important;
+grid-row:auto !important;
+width:100% !important;
+min-width:0 !important;
+max-width:none !important;
+flex:none !important;
+}
+@media(max-width:650px){
+.wizard-pane[data-step="1"] .product-workspace .product-left > .product-group:first-child > .product-group-fields.design-six-col2 {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
 </style></body></html>
