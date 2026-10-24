@@ -98,4 +98,24 @@ document.addEventListener('change',e=>{if(!e.target.id?.startsWith('xl_'))return
 #exact-product-fields input[type=number]{appearance:textfield;-moz-appearance:textfield}
 #exact-product-fields input[type=number]::-webkit-inner-spin-button,#exact-product-fields input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 @media(max-width:600px){#exact-product-fields{gap:15px 12px!important}#exact-product-fields>.field,#exact-product-fields>.field:has(#designWidth),#exact-product-fields>.field:has(#designLength),#exact-product-fields>.field:has(#materialWidth),#exact-product-fields>.field:has(#orderThickness),#exact-product-fields>.field:has(#zed),#exact-product-fields>.field:has(#qazan),#exact-product-fields>.field:has(#rawStock),#exact-product-fields>.field:has(#printType){width:calc(50% - 6px)}#exact-product-fields>.field:has(#designCount),#exact-product-fields>.field:has(#repeatWidth),#exact-product-fields>.field:has(#repeatLength),#exact-product-fields>.field:has(#colorCount),#exact-product-fields>.field:has(#layerCount){width:calc(50% - 6px)}}
+</style><style>
+/* Fixed compact sizing for product entry: override legacy grid widths */
+.wizard-pane[data-step="1"] #exact-product-fields{display:flex!important;flex-flow:row wrap!important;justify-content:flex-start!important;align-items:flex-end!important;gap:16px 14px!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field{flex:0 0 125px!important;width:125px!important;max-width:125px!important;grid-column:auto!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#designWidth),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#designLength),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#materialWidth),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#orderThickness),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#zed),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#qazan){flex-basis:145px!important;width:145px!important;max-width:145px!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#designCount),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#repeatWidth),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#repeatLength),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#colorCount),
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#layerCount){flex-basis:105px!important;width:105px!important;max-width:105px!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#rawStock){flex-basis:205px!important;width:205px!important;max-width:205px!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field:has(#printType){flex-basis:150px!important;width:150px!important;max-width:150px!important}
+.wizard-pane[data-step="1"] #exact-product-fields>.field input,
+.wizard-pane[data-step="1"] #exact-product-fields>.field select{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+@media(max-width:550px){.wizard-pane[data-step="1"] #exact-product-fields>.field{flex:1 1 125px!important;max-width:calc(50% - 7px)!important;width:auto!important}}
 </style></body></html>
