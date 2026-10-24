@@ -227,4 +227,17 @@ label.textContent=name;target.appendChild(field);
 });
 if(original){original.style.display='none'}
 });
+</script><script>
+document.addEventListener('DOMContentLoaded',function(){
+const choices={"printMaterial":["-","BOPP Şəffaf","BOPP Mat","BOPP Metalizə","BOPP Sədəf","BOPP Cold seal","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Mat","PET Metalizə","PET Ağ","PE Şəffaf","PE Ağ","PVC","PP Şəffaf","PP OPAK","Kağız","Perqament","Falqa","KUŞE","ŞƏRAB Kağız","TOP TERMAL","PETG Şəffaf","PETG Ağ","ULTRA Clear","PLEN","OPS"],"material2":["-","BOPP Şəffaf","BOPP Mat","BOPP Metalizə","BOPP Sədəf","BOPP Cold seal","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Mat","PET Metalizə","PET Ağ","PE Şəffaf","PE Ağ","PVC","PP Şəffaf","PP OPAK","Kağız","Perqament","Falqa","KUŞE","ŞƏRAB Kağız","TOP TERMAL","PETG Şəffaf","PETG Ağ","ULTRA Clear","PLEN","OPS"],"material3":["-","BOPP Şəffaf","BOPP Mat","BOPP Metalizə","BOPP Sədəf","BOPP Cold seal","CPP Şəffaf","CPP Metalizə","CPP Ağ","PET Şəffaf","PET Mat","PET Metalizə","PET Ağ","PE Şəffaf","PE Ağ","PVC","PP Şəffaf","PP OPAK","Kağız","Perqament","Falqa","KUŞE","ŞƏRAB Kağız","TOP TERMAL","PETG Şəffaf","PETG Ağ","ULTRA Clear","PLEN","OPS"],"thickness1":["-","12","18","20","23","25","30","32","35","38","40","42","45","50","52","54","55","60","62","64","65","70","72","74","75","80","82","84","85","90","95","100","105","110","115","120","125","130","135","140","145","150","155","160"],"thickness2":["-","12","18","20","23","25","30","32","35","38","40","42","45","50","52","54","55","60","62","64","65","70","72","74","75","80","82","84","85","90","95","100","105","110","115","120","125","130","135","140","145","150","155","160"],"thickness3":["-","12","18","20","23","25","30","32","35","38","40","42","45","50","52","54","55","60","62","64","65","70","72","74","75","80","82","84","85","90","95","100","105","110","115","120","125","130","135","140","145","150","155","160"],"underVarnish":["-","Primer"],"overVarnish":["-","OPV Parlaq","OPV Mat","Mat lak"]};
+Object.entries(choices).forEach(function(entry){
+const id=entry[0],values=entry[1],old=document.getElementById(id);
+if(!old)return;
+const select=document.createElement('select');select.id=id;select.className=old.className;
+select.innerHTML='<option value="">Seçin</option>';
+values.forEach(function(value){const option=document.createElement('option');option.value=value;option.textContent=value;select.appendChild(option)});
+if(old.value&&values.includes(old.value))select.value=old.value;
+old.replaceWith(select);
+});
+});
 </script></body></html>
