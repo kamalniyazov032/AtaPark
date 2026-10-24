@@ -216,4 +216,20 @@ flex:none!important;flex-basis:auto!important;margin:0!important;
 grid-template-columns:minmax(0,2fr) minmax(0,.72fr) minmax(0,1.15fr) minmax(0,.55fr)!important;
 }
 }
+</style><style>
+/* Dizayn ölçüləri: bütün 5 sahə masaüstündə bir sətirdə */
+@media(min-width:601px){
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(1)>.product-group-fields{
+display:grid!important;
+grid-template-columns:minmax(0,1.15fr) minmax(0,1.15fr) minmax(0,.75fr) minmax(0,.85fr) minmax(0,.85fr)!important;
+gap:12px!important;align-items:end!important;
+}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(1)>.product-group-fields>.field{
+grid-column:auto!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:none!important;flex:none!important;flex-basis:auto!important;margin:0!important;
+}
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(1)>.product-group-fields>.field input,
+.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(1)>.product-group-fields>.field select{
+width:100%!important;min-width:0!important;box-sizing:border-box!important;
+}
+}
 </style></body></html>
