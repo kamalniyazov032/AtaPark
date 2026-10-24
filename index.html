@@ -77,4 +77,25 @@ document.addEventListener('change',e=>{if(!e.target.id?.startsWith('xl_'))return
 #exact-product-fields .field:focus-within label{color:#3268e8}
 @media(max-width:1000px){#exact-product-fields>.field,#exact-product-fields>.field:has(#designWidth),#exact-product-fields>.field:has(#designLength),#exact-product-fields>.field:has(#materialWidth),#exact-product-fields>.field:has(#rawStock),#exact-product-fields>.field:has(#orderThickness),#exact-product-fields>.field:has(#zed),#exact-product-fields>.field:has(#qazan),#exact-product-fields>.field:has(#printType){grid-column:span 6}#exact-product-fields>.field:has(#designCount),#exact-product-fields>.field:has(#repeatWidth),#exact-product-fields>.field:has(#repeatLength),#exact-product-fields>.field:has(#colorCount),#exact-product-fields>.field:has(#layerCount){grid-column:span 3}}
 @media(max-width:580px){#exact-product-fields>.field,#exact-product-fields>.field:has(#designWidth),#exact-product-fields>.field:has(#designLength),#exact-product-fields>.field:has(#materialWidth),#exact-product-fields>.field:has(#rawStock),#exact-product-fields>.field:has(#orderThickness),#exact-product-fields>.field:has(#zed),#exact-product-fields>.field:has(#qazan),#exact-product-fields>.field:has(#printType){grid-column:span 12}#exact-product-fields>.field:has(#designCount),#exact-product-fields>.field:has(#repeatWidth),#exact-product-fields>.field:has(#repeatLength),#exact-product-fields>.field:has(#colorCount),#exact-product-fields>.field:has(#layerCount){grid-column:span 6}}
+</style><style>
+/* Məhsul sahələri: məlumat tipinə uyğun kompakt ölçü, soldan düzülüş */
+#exact-product-fields{display:flex!important;flex-wrap:wrap;align-items:flex-end;justify-content:flex-start;gap:17px 16px!important}
+#exact-product-fields>.field{flex:0 0 auto!important;grid-column:auto!important;width:142px;max-width:100%}
+#exact-product-fields>.field:has(#designWidth),
+#exact-product-fields>.field:has(#designLength),
+#exact-product-fields>.field:has(#materialWidth),
+#exact-product-fields>.field:has(#orderThickness),
+#exact-product-fields>.field:has(#zed),
+#exact-product-fields>.field:has(#qazan){width:172px}
+#exact-product-fields>.field:has(#designCount),
+#exact-product-fields>.field:has(#repeatWidth),
+#exact-product-fields>.field:has(#repeatLength),
+#exact-product-fields>.field:has(#colorCount),
+#exact-product-fields>.field:has(#layerCount){width:116px}
+#exact-product-fields>.field:has(#rawStock){width:238px}
+#exact-product-fields>.field:has(#printType){width:172px}
+#exact-product-fields input,#exact-product-fields select{width:100%;height:39px;min-height:39px}
+#exact-product-fields input[type=number]{appearance:textfield;-moz-appearance:textfield}
+#exact-product-fields input[type=number]::-webkit-inner-spin-button,#exact-product-fields input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+@media(max-width:600px){#exact-product-fields{gap:15px 12px!important}#exact-product-fields>.field,#exact-product-fields>.field:has(#designWidth),#exact-product-fields>.field:has(#designLength),#exact-product-fields>.field:has(#materialWidth),#exact-product-fields>.field:has(#orderThickness),#exact-product-fields>.field:has(#zed),#exact-product-fields>.field:has(#qazan),#exact-product-fields>.field:has(#rawStock),#exact-product-fields>.field:has(#printType){width:calc(50% - 6px)}#exact-product-fields>.field:has(#designCount),#exact-product-fields>.field:has(#repeatWidth),#exact-product-fields>.field:has(#repeatLength),#exact-product-fields>.field:has(#colorCount),#exact-product-fields>.field:has(#layerCount){width:calc(50% - 6px)}}
 </style></body></html>
