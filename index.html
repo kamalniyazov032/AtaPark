@@ -89,7 +89,7 @@
 .main>.wizard>.wiz-step .circle{width:24px;height:24px;min-width:24px}
 .main>.wizard>.wiz-step strong{font-size:12px}
 .main>.wizard>.wiz-step small{display:none}
-.wizard-pane{display:block!important;scroll-margin-top:83px!important}
+.wizard-pane{display:block;scroll-margin-top:83px!important}
 .wizard-pane+.wizard-pane{margin-top:17px}
 .panel{border-color:#e1e8f2;border-radius:13px;box-shadow:0 5px 24px rgba(28,48,80,.035);margin-bottom:0}
 .panel-head{padding:17px 22px;min-height:57px}
@@ -121,6 +121,9 @@
 #saveStatus{font-size:12px}
 @media(max-width:1150px){.measure-layout{grid-template-columns:1fr}.measure-visual{max-width:310px}.measure-layout .fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:750px){.sidebar{position:relative;height:auto;flex:auto}.main>.wizard{padding:9px 12px!important}.content{padding:20px 13px 100px}.measure-layout .fields{grid-template-columns:1fr}.order-actionbar{align-items:stretch;flex-direction:column}.order-actionbar .action-buttons{justify-content:flex-end}}
+
+/* Hidden state must override the wizard's forced display rules. */
+.wizard-pane[hidden],.main>.wizard>.wiz-step[hidden]{display:none!important}
 </style></head><body><div class="layout"><aside class="sidebar">
 <div class="brand"><span class="mark">A</span><div><strong>AtaPark</strong><small>ERP SYSTEM</small></div></div>
 <div><div class="menu-label">İŞ SAHƏSİ</div><div class="nav">
@@ -184,8 +187,8 @@ const layer=document.getElementById("layerCount"),pane=document.querySelector('.
 const children=[...grid.children],group1=children.slice(0,5),group2=children.slice(5,10);
 function update(){
  const count={"Tək qat":1,"İki qat":2,"Üç qat":3}[layer.value]||0;
- pane.hidden=count<2;pane.style.display=count<2?"none":"";
- nav.hidden=count<2;nav.style.display=count<2?"none":"";
+ pane.hidden=count<2;
+ nav.hidden=count<2;
  group1.forEach(el=>el.style.display=count>=2?"":"none");
  group2.forEach(el=>el.style.display=count>=3?"":"none");
  for(const k of [1,2]){const active=count>k;const summary=document.getElementById("materialSummary"+(k+1));if(summary&&!active)summary.value="- 0 mic 0 mm";}
