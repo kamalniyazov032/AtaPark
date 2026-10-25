@@ -1,199 +1,385 @@
 <!doctype html>
 <html lang="az">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AtaPark ERP — Satış sifarişi</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AtaPark — Yeni satış sifarişi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{color-scheme:light;--bg:#F4F6F9;--card:#fff;--ink:#15202B;--mute:#5B6773;--line:#D8DEE5;--acc:#0E4C92;--accT:#E3EDF8;--ok:#1E7B4B;--warn:#B4540A;--c:#00A3D9;--m:#D6246E;--y:#F2C200;--k:#1B1B1F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 "Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2{font-family:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+.stripe{height:6px;background:linear-gradient(90deg,var(--c) 0 25%,var(--m) 25% 50%,var(--y) 50% 75%,var(--k) 75%)}
+header{padding:20px clamp(16px,4vw,40px) 4px;max-width:1360px;margin:0 auto}
+header h1{font-size:clamp(24px,3.4vw,34px)}
+header p{margin:4px 0 0;color:var(--mute)}
+.app{display:grid;gap:20px;max-width:1360px;margin:0 auto;padding:16px clamp(16px,4vw,40px) 60px}
+@media(min-width:1100px){.app{grid-template-columns:minmax(0,1fr) 300px;align-items:start}}
+aside{position:sticky;top:70px}
+nav{display:flex;gap:6px;overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px clamp(16px,3vw,32px);border-bottom:1px solid var(--line)}
+nav a{white-space:nowrap;display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;color:var(--mute);text-decoration:none;font-weight:500}
+nav a:hover,nav a.on{background:var(--accT);color:var(--acc)}
+nav a small{font-variant-numeric:tabular-nums}
+nav a.done small{color:var(--ok)}
+@media(max-width:1099px){aside{position:static}}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;scroll-margin-top:70px}
+section h2{font-size:20px;margin-bottom:14px}
+section h2 span{font:500 13px "Instrument Sans",sans-serif;color:var(--mute);margin-left:8px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.f{display:flex;flex-direction:column;gap:4px}
+.f.w2{grid-column:span 2}
+.f.full{grid-column:1/-1}
+@media(max-width:520px){.f.w2{grid-column:auto}}
+label{font-weight:500;font-size:13px;color:var(--mute)}
+label.req::after{content:" *";color:var(--m)}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-height:40px}
+input:focus-visible,select:focus-visible,button:focus-visible,nav a:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+input[readonly]{background:transparent;border-style:dashed;color:var(--mute)}
+.sub{grid-column:1/-1;font-weight:600;padding-top:6px;border-top:1px solid var(--line);margin-top:4px}
+.hint{font-size:12px;color:var(--mute)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:6px;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--mute);font-weight:500}
+td input{padding:6px 8px;min-height:34px}
+.res{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+.res div{background:var(--bg);border-radius:10px;padding:10px 12px}
+.res b{display:block;font:700 20px "Bricolage Grotesque",sans-serif;font-variant-numeric:tabular-nums}
+.res span{font-size:12px;color:var(--mute)}
+.mat{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.mat li{padding:8px 12px;border-left:4px solid var(--acc);background:var(--bg);border-radius:0 8px 8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.bar{height:8px;background:var(--bg);border-radius:8px;overflow:hidden;margin:8px 0 12px}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .25s}
+.miss{margin:0 0 14px;padding-left:18px;color:var(--warn);font-size:13px}
+.ok{color:var(--ok);font-size:13px;margin:0 0 14px}
+.btns{display:grid;gap:8px}
+button{font:inherit;font-weight:600;border-radius:8px;padding:10px 14px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;min-height:42px}
+button.p{background:var(--acc);border-color:var(--acc);color:#fff}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+[hidden]{display:none!important}
+.shell{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
+.content{min-width:0}
+.side{background:var(--card);border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:0;height:100vh;overflow:auto;align-self:start}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 16px;font:700 18px "Bricolage Grotesque",sans-serif}
+.brand i{width:34px;height:34px;border-radius:9px;background:var(--acc);color:#fff;display:grid;place-items:center;font-style:normal}
+.grp{font-size:12px;color:var(--mute);padding:14px 10px 4px}
+.mi{display:flex;align-items:center;width:100%;text-align:left;border:0;background:none;border-radius:8px;padding:9px 10px;font-weight:500;color:var(--ink);cursor:pointer;min-height:40px}
+.mi:hover{background:var(--bg)}
+.mi.on{background:var(--accT);color:var(--acc)}
+.mi.sub{padding-left:26px;font-weight:400}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px clamp(16px,3vw,32px);background:var(--card);border-bottom:1px solid var(--line);min-height:56px}
+.crumb{color:var(--mute)}.crumb b{color:var(--ink)}
+.pad{padding:20px clamp(16px,3vw,32px) 60px;max-width:1360px}
+.pad .card{margin-top:16px}
+td button{min-height:32px;padding:4px 10px;font-weight:500}
+.tag{padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.tag.g{background:#E1F3E9;color:var(--ok)}.tag.o{background:#FCEBD9;color:var(--warn)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:4px;align-items:center;padding:8px}.brand,.grp{display:none}.mi{white-space:nowrap;width:auto}.mi.sub{padding-left:10px}}
+@media print{nav,aside,.stripe,.side,.top{display:none}.shell{display:block}.app{display:block}section{break-inside:avoid;border-color:#999}body{background:#fff}}
 
-:root{--bg:#f5f7fb;--white:#fff;--text:#17263d;--muted:#8290a3;--line:#e8edf3;--blue:#3268e8;--pale:#edf3ff;--green:#178465}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.layout{display:flex;min-height:100vh}.sidebar{width:244px;background:#fff;border-right:1px solid var(--line);padding:28px 16px;display:flex;flex-direction:column;gap:34px}.brand{display:flex;align-items:center;gap:11px;padding:0 14px}.mark{width:36px;height:36px;background:#1f4fc6;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:-1px}.brand strong{font-size:19px;letter-spacing:-.7px}.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:2px;font-weight:700}.menu-label{font-size:10px;letter-spacing:1.7px;color:#a0abba;font-weight:800;padding:0 14px;margin-bottom:9px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{border:0;background:none;text-align:left;padding:12px 14px;border-radius:10px;color:#64748b;display:flex;align-items:center;gap:12px;width:100%}.nav button.active{background:var(--pale);color:#2455c6;font-weight:700}.nav svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}.sidebar-foot{margin-top:auto;border-top:1px solid var(--line);padding:18px 13px 0;color:#64748b;font-size:12px}.avatar{display:inline-grid;place-items:center;width:33px;height:33px;border-radius:10px;background:#e8eefc;color:#2b56b4;font-weight:700;margin-right:8px}.main{flex:1;min-width:0}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 42px}.crumb{color:#9ba7b8;font-size:13px}.crumb b{color:#263750;font-weight:600}.top-right{display:flex;align-items:center;gap:16px;color:#7d8b9c}.pill{background:#f0f5ff;color:#4164a8;padding:7px 12px;border-radius:20px;font-size:11px;font-weight:700}.content{max-width:1360px;margin:0 auto;padding:35px 42px 70px}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:27px}h1{font-size:27px;line-height:1.2;letter-spacing:-.8px;margin:0 0 8px;font-weight:750}.sub{color:#8794a5;font-size:13px}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid #dfe6ef;background:#fff;border-radius:9px;padding:10px 17px;font-weight:650;color:#536177}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 5px 12px #3268e821}.btn:hover{filter:brightness(.98)}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 5px 24px #192b4705;margin-bottom:20px}.panel-head{padding:23px 26px 19px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f3f7}.panel-title{font-size:15px;font-weight:750;letter-spacing:-.2px}.step{font-size:11px;color:#98a5b4}.panel-body{padding:24px 26px}.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.field{min-width:0}.field label{display:block;font-size:12px;font-weight:650;color:#68778a;margin-bottom:8px}.input,select,textarea{width:100%;border:1px solid #e0e7ef;background:#fff;color:#293a50;border-radius:9px;min-height:42px;padding:10px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:#9ab7ff;box-shadow:0 0 0 3px #edf3ff}.input[readonly]{background:#f8fafc;color:#64748b}.customer{display:flex;gap:8px}.customer .input{flex:1;min-width:0}.lookup{border:1px solid #dbe6fa;color:#315fd3;background:#f0f5ff;border-radius:9px;min-width:44px;font-size:19px}.hint{color:#a0abba;font-size:11px;margin-top:6px}.wide{grid-column:span 2}.full{grid-column:1/-1}.line-head{display:flex;align-items:center;justify-content:space-between}.add{background:#eff5ff;color:#2e62d6;border:0;border-radius:8px;padding:9px 13px;font-weight:700}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;text-align:left;min-width:850px}th{background:#f8fafc;color:#94a1b1;font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:750;padding:14px 18px}td{padding:17px 18px;border-top:1px solid #eef2f6;color:#506077}td strong{display:block;color:#263750;font-weight:700}td small{color:#9aa7b6}.number{text-align:right}.tag{display:inline-block;background:#eef8f3;color:#188365;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:700}.delete{border:0;background:none;color:#a0acba;font-size:19px}.empty{text-align:center;padding:40px;color:#9ba7b8}.bottom{display:grid;grid-template-columns:1fr 310px;gap:20px}.summary{padding:24px 26px}.sumrow{display:flex;justify-content:space-between;margin-bottom:13px;color:#7d8b9e}.sumrow b{color:#3b4c62}.total{border-top:1px solid var(--line);padding-top:17px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;font-weight:750}.total strong{font-size:23px;color:#2559d1}.notice{margin-top:14px;font-size:12px;color:#9aa7b7}.modal-bg{position:fixed;inset:0;background:#14243b66;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal-bg.show{display:flex}.modal{background:white;border-radius:16px;width:min(660px,100%);box-shadow:0 30px 90px #172b4b33;overflow:hidden}.modal-header{padding:23px 26px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.modal-header h2{margin:0;font-size:18px}.close{border:0;background:none;font-size:25px;color:#8391a4}.modal-body{padding:24px 26px}.result{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 3px;border-bottom:1px solid #edf1f6}.result:last-child{border-bottom:0}.result strong{display:block}.result small{color:#9aa7b6}.result button{border:1px solid #d8e5ff;background:#f1f6ff;color:#3162d5;border-radius:8px;padding:8px 12px;font-weight:650}.toast{position:fixed;bottom:24px;right:25px;background:#1c344f;color:white;border-radius:10px;padding:13px 18px;box-shadow:0 10px 30px #182e4933;display:none;z-index:20}.toast.show{display:block}@media(max-width:1150px){.sidebar{width:205px}.content{padding:30px 25px}.topbar{padding:0 25px}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:750px){.layout{display:block}.sidebar{width:auto;padding:14px;gap:12px}.sidebar .nav,.sidebar .menu-label,.sidebar-foot{display:none}.topbar{height:55px;padding:0 16px}.content{padding:24px 14px}.heading{display:block}.actions{margin-top:18px}.fields{grid-template-columns:1fr}.wide{grid-column:auto}.panel-body,.panel-head{padding:19px}.bottom{grid-template-columns:1fr}h1{font-size:23px}}
+/* AtaPark Studio — refined production order workspace */
+:root{--bg:#F3F6FA;--card:#fff;--ink:#152438;--mute:#6D7C8E;--line:#E1E8F0;--acc:#174A84;--accT:#EAF2FC;--ok:#15865A;--warn:#B87527;--shadow:0 9px 34px rgba(20,45,75,.055)}
+body{font-family:"Instrument Sans",system-ui,sans-serif;letter-spacing:-.008em}
+.shell{grid-template-columns:254px minmax(0,1fr)}
+.side{background:#10263D;color:#D6E3F1;border:0;padding:23px 14px}
+.brand{color:white;font-size:19px;gap:12px;padding:7px 10px 28px}
+.brand i{background:linear-gradient(140deg,#4AB1E9,#2562A6);box-shadow:0 6px 18px #0003;width:40px;height:40px;border-radius:12px}
+.grp{color:#8199B0;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:20px 13px 9px;font-size:10px}
+.mi{color:#BACBDB;padding:11px 13px;margin:3px 0;border-radius:10px;gap:10px;transition:background .15s}
+.mi:hover{background:#1C3955;color:#fff}
+.mi.on{background:#284D72;color:white;box-shadow:inset 3px 0 0 #64BEF4}
+.mi.sub{padding-left:20px}
+.content{background:radial-gradient(ellipse 55% 300px at 55% 0%,#E5EFFA 0%,transparent 100%),var(--bg)}
+.stripe{height:3px;background:linear-gradient(90deg,#37B7D6 0 25%,#E94B8B 25% 50%,#F3CA42 50% 75%,#263C58 75%)}
+.top{min-height:68px;padding:10px clamp(20px,3vw,44px);box-shadow:0 1px 0 #e1e8ef}
+.crumb{font-size:13px}
+.top button.p{background:#fff;color:var(--acc);border:1px solid #CDD9E6}
+header{padding:30px clamp(20px,3vw,44px) 18px;max-width:1520px}
+header h1{font-size:clamp(28px,3.1vw,39px);letter-spacing:-.055em;font-weight:700}
+header p{font-size:14px;color:var(--mute);margin-top:7px}
+nav{top:0;padding:11px clamp(20px,3vw,44px);gap:5px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e8edf3;box-shadow:0 5px 18px #203e5810}
+nav a{font-size:12px;border:1px solid transparent;padding:9px 12px;border-radius:9px;gap:12px}
+nav a.on{background:var(--accT);border-color:#d2e2f6}
+nav a.done small{font-weight:800}
+.app{max-width:1520px;padding:25px clamp(20px,3vw,44px) 100px;gap:22px;grid-template-columns:minmax(0,1fr) 310px}
+.app main{min-width:0}
+section{border:1px solid #DFE7EF;box-shadow:var(--shadow);border-radius:16px;padding:27px 29px;margin-bottom:18px}
+section h2{font-size:19px;font-weight:700;letter-spacing:-.035em;margin:0 0 22px;padding-bottom:17px;border-bottom:1px solid #E9EEF3}
+section h2::first-letter{color:var(--acc)}
+.grid{gap:18px 17px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.f{gap:7px;min-width:0}
+.f.w2{grid-column:span 2}
+.f.full{grid-column:1/-1}
+label{font-size:12px;font-weight:650;color:#53667B}
+input,select{border-color:#DCE5EE;background:#F9FBFD;border-radius:9px;min-height:43px;padding:9px 12px;font-size:13px;transition:border-color .15s,box-shadow .15s}
+input:hover,select:hover{border-color:#B6C7D9}
+input:focus,select:focus{background:#fff;border-color:#528DCD;box-shadow:0 0 0 3px #DDEBFA;outline:0}
+input[readonly]{background:#F3F7FB;border:1px dashed #C7D4E2}
+.sub{background:#F4F8FD;color:#214E7E;border-radius:9px;border:0;padding:11px 13px;margin:10px 0 2px;font-size:13px}
+.card{box-shadow:var(--shadow);border:1px solid #DFE7EF;border-radius:16px;padding:23px}
+aside{top:82px}
+aside .card>b{font-size:34px;line-height:1.1;font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-.05em;color:#163E70}
+.bar{height:7px;background:#E9EFF6;margin:14px 0 20px}
+.bar i{background:linear-gradient(90deg,#2281CA,#2DBDA7)}
+#miss{max-height:300px;overflow:auto}
+.miss{padding-left:17px;line-height:1.9}
+.btns{margin-top:18px}
+.btns button{border-radius:10px}
+button.p{background:#174A84;color:white;border-color:#174A84;box-shadow:0 5px 14px #174a8422}
+button.p:hover{background:#103C70}
+.res{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.res div{border:1px solid #E3EBF4;background:#F7FAFD;border-radius:12px;padding:16px}
+.res b{font-size:24px;color:#1A4F87;margin-top:7px}
+.res span{font-size:12px}
+.mat li{border-left-color:#2A83BC;padding:13px 16px}
+table{min-width:650px}
+th{background:#F6F9FC;padding:12px 9px}
+td{padding:9px}
+#v-list,#v-soon{max-width:1420px}
+#v-list .res{grid-template-columns:repeat(3,1fr)}
+@media(max-width:1380px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1180px){.app{grid-template-columns:minmax(0,1fr) 280px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:950px){.app{grid-template-columns:1fr}aside{position:static}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{grid-template-columns:1fr}.side{height:auto;position:static;display:flex;overflow-x:auto;gap:3px;padding:9px 12px}.brand,.grp{display:none}.mi,.mi.sub{white-space:nowrap;width:auto;padding:10px 13px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.f.w2{grid-column:auto}.res{grid-template-columns:repeat(2,minmax(0,1fr))}section{padding:20px 16px}.app{padding:18px 14px 80px}header{padding:24px 17px 15px}nav{padding:10px 14px}.top{padding:10px 14px}}
+@media print{.content{background:white}section{box-shadow:none}.app{display:block}aside{display:none}.side{display:none}nav{display:none}.top{display:none}.stripe{display:none}}
 
-
-.wiz-step{background:white;border:1px solid #e6ebf3;border-radius:12px;padding:13px 10px;display:flex;gap:9px;align-items:center;text-align:left;color:#8391a4;min-height:70px}.wiz-step .circle{flex:none;width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#f0f3f8;color:#75859a;font-size:12px;font-weight:800}.wiz-step strong{display:block;font-size:12px;line-height:1.35;color:#5c6d83}.wiz-step small{display:block;font-size:10px;color:#9ca9b9;margin-top:3px}.wiz-step.current{border-color:#7da3ff;background:#f4f8ff;box-shadow:0 0 0 2px #e5efff}.wiz-step.current .circle{background:#3268e8;color:white}.wiz-step.current strong{color:#2456ca}.wiz-step.done .circle{background:#dff6eb;color:#14815e}.wizard-pane{display:none}.wizard-pane.current{display:block}.wizard-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0 0}.wizard-footer .left{color:#9aa6b5;font-size:12px}.wizard-footer .buttons{display:flex;gap:9px}.info-strip{background:#f3f7ff;border:1px solid #e3ebfc;padding:12px 16px;border-radius:10px;color:#647da8;font-size:12px;margin-bottom:18px}.mini-heading{font-weight:750;color:#40536e;font-size:13px;margin:4px 0 15px}.review-block{padding:16px 0;border-bottom:1px solid #edf1f6}.review-block h3{font-size:14px;margin:0 0 9px}.review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.review-item{font-size:12px;color:#8493a6}.review-item strong{display:block;color:#2b3d55;font-size:13px;margin-top:3px;overflow-wrap:anywhere}@media(max-width:1250px){}@media(max-width:750px){.wiz-step{padding:9px;min-height:65px}.review-grid{grid-template-columns:repeat(2,1fr)}}
- .design-six-fields{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:20px}.design-six-fields .field label{font-size:11px;min-height:34px;margin-bottom:5px}@media(max-width:1100px){.design-six-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.design-six-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.excel-detail{margin:16px 0 0;border:1px solid #e7edf5;border-radius:12px;background:#fff;overflow:hidden}.excel-detail summary{cursor:pointer;padding:15px 18px;font-weight:700;color:#435775;background:#f8fafd}.excel-detail .inside{padding:18px}.excel-detail .inside .fields{margin:0}.excel-detail input,.excel-detail select{max-width:100%}.excel-detail .small-code{color:#8fa0b4;font-size:10px}.excel-units{overflow:auto}.excel-units table{min-width:850px}.excel-units input{min-width:110px}
-
-/* Product step — grouped technical cards and live order summary */
-.wizard-pane[data-step="1"] .panel{border:1px solid #e2eaf5;box-shadow:none}
-.wizard-pane[data-step="1"] .panel-head{padding:18px 22px}
-.product-workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
-.product-left{display:flex;flex-direction:column;gap:16px;min-width:0}
-.product-group{border:1px solid #e2eaf5;background:white;border-radius:14px;overflow:hidden}
-.product-group-head{display:flex;align-items:center;gap:12px;padding:17px 20px;border-bottom:1px solid #edf1f7}
-.product-group-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:#ebf1ff;color:#315de6;flex:none}
-.product-group-icon svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.product-group-head strong{display:block;font-size:15px;color:#1d2d46}
-.product-group-head small{display:block;color:#8292a9;margin-top:3px;font-size:12px}
-.product-group-fields{display:flex;flex-wrap:wrap;gap:18px 15px;padding:21px 20px 24px}
-.product-left>.product-group:first-child>.product-group-fields{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important;padding:21px 20px 24px!important}
-.product-left>.product-group:first-child>.product-group-fields>.field{width:100%!important;max-width:none!important;min-width:0!important;flex:0 1 auto!important}
-
-
-.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 30px)/3);max-width:none;min-width:0}
-.wizard-pane[data-step="1"] .product-group-fields .field label{margin-bottom:8px;color:#334761;font-size:12px;font-weight:700}
-.wizard-pane[data-step="1"] .product-group-fields input,.wizard-pane[data-step="1"] .product-group-fields select{height:44px!important;min-height:44px!important;border-radius:9px!important;font-size:14px!important;padding:9px 11px!important}
-.product-input-wrap{position:relative}
-.product-input-wrap input{padding-right:56px!important}
-.product-unit{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:#f1f5fa;color:#53677f;font-size:11px;font-weight:700;padding:4px 7px;border-radius:6px;pointer-events:none}
-.product-side{border:1px solid #e2eaf5;background:#fff;border-radius:14px;overflow:hidden;position:sticky;top:18px}
-.product-side-head{padding:20px 21px;border-bottom:1px solid #edf1f7}
-.product-side-head strong{display:block;font-size:15px}
-.product-side-head small{color:#8b9ab0;font-size:12px}
-.product-side-body{padding:20px}
-.product-preview{height:128px;border:1px solid #dce7f5;background:#f8faff;border-radius:12px;display:grid;place-items:center;margin-bottom:18px}
-.product-preview svg{width:85%;height:100px}
-.product-side-row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px dashed #e6edf5;color:#63758f;font-size:12px}
-.product-side-row:last-child{border:0}
-.product-side-row b{color:#1c2c46;text-align:right}
-@media(max-width:1100px){.product-workspace{grid-template-columns:1fr}.product-side{position:static}}
-@media(max-width:670px){.wizard-pane[data-step="1"] .product-group-fields>.field{width:calc((100% - 15px)/2)!important;flex-basis:calc((100% - 15px)/2)!important}}
-@media(max-width:430px){.wizard-pane[data-step="1"] .product-group-fields>.field{width:100%!important;flex-basis:100%!important}}
-
-/* Məhsul mərhələsi: hər bölmənin tək və aydın grid qaydası */
-.wizard-pane[data-step="1"] .product-group-fields{display:grid;gap:10px;padding:18px 20px}
-.wizard-pane[data-step="1"] .product-group-fields>.field{width:100%;max-width:none;min-width:0;flex:none;grid-column:auto;grid-row:auto}
-.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2>.field.col-2{grid-column:auto;grid-row:auto;width:100%;max-width:none;min-width:0}
-.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
-.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields>.field{grid-column:auto;grid-row:auto;min-width:0;width:100%;max-width:none}
-.wizard-pane[data-step="1"] .product-group-fields .field input,.wizard-pane[data-step="1"] .product-group-fields .field select{width:100%;min-width:0;box-sizing:border-box}
-@media(max-width:800px){.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:900px){.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:650px){.wizard-pane[data-step="1"] .product-left>.product-group:first-child>.product-group-fields.design-six-col2,.wizard-pane[data-step="1"] .product-left>.product-group:nth-child(2)>.product-group-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.wizard-pane{display:block!important;scroll-margin-top:95px}.wizard-pane+.wizard-pane{margin-top:20px}\n\n/* Naviqasiya düymələri yalnız yazının eni qədər yer tutur */
-/* Naviqasiya: sabit bir sıra, mətn ölçüsündə düymələr */
-.wizard{display:flex!important;flex-wrap:nowrap!important;align-items:center;justify-content:flex-start!important;gap:7px!important;overflow-x:auto;overflow-y:hidden;white-space:nowrap;position:sticky;top:0;z-index:30;background:#f3f6fb;padding:8px 4px;margin:0 0 18px;scrollbar-width:thin}
-.wizard>.wiz-step{display:inline-flex!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:38px;padding:7px 11px;border-radius:8px;gap:7px;align-items:center}
-.wizard>.wiz-step .circle{width:23px;height:23px;min-width:23px;font-size:11px}
-.wizard>.wiz-step strong{font-size:12px;white-space:nowrap}
-.wizard>.wiz-step small{display:none}
-.wizard-pane{scroll-margin-top:70px}
-
-/* Naviqasiya header-in dərhal altında sabit qalır */
-.main>.wizard{position:sticky!important;top:0!important;z-index:50!important;width:100%;box-sizing:border-box;background:#f3f6fb!important;border-bottom:1px solid #e2e9f3;padding:8px 24px!important;margin:0!important}
-.main>.wizard>.wiz-step{flex:0 0 auto!important;width:max-content!important}
-.wizard-pane{scroll-margin-top:75px!important}
-.direction-choices{display:flex;gap:12px;flex-wrap:wrap;margin:7px 0}.direction-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 12px;border:1px solid #d8e2ef;border-radius:12px;cursor:pointer;background:#fff;color:#52647d;transition:border-color .15s,background .15s}.direction-choice input{position:absolute;top:9px;left:9px;accent-color:#2563eb}.direction-choice:has(input:checked){border-color:#2563eb;background:#eff5ff;box-shadow:0 0 0 1px #2563eb}.direction-number{font-size:12px;font-weight:600}.direction-art{display:block;line-height:0}
-
-/* AtaPark 2026 — refined order-entry workspace */
-:root{--bg:#f5f7fb;--line:#e4eaf3;--blue:#3268e8}
-.sidebar{position:sticky;top:0;height:100vh;flex:0 0 244px}
-.topbar{height:62px;padding:0 32px}
-.content{max-width:1600px;padding:24px 30px 110px}
-.heading{margin-bottom:17px}
-.heading h1{font-size:25px}
-.heading .sub{color:#71829a}
-.main>.wizard{position:sticky!important;top:0!important;z-index:55!important;display:flex!important;flex-wrap:nowrap!important;gap:7px!important;padding:10px 30px!important;background:#f5f7fb!important;border-bottom:1px solid #e7edf5;overflow-x:auto;scrollbar-width:thin;white-space:nowrap}
-.main>.wizard>.wiz-step{flex:0 0 auto!important;width:auto!important;min-width:0!important;min-height:42px!important;padding:8px 11px!important;border:1px solid #e5ebf4;border-radius:10px;background:#fff}
-.main>.wizard>.wiz-step.current{background:#eef4ff;border-color:#8eafff}
-.main>.wizard>.wiz-step .circle{width:24px;height:24px;min-width:24px}
-.main>.wizard>.wiz-step strong{font-size:12px}
-.main>.wizard>.wiz-step small{display:none}
-.wizard-pane{display:block;scroll-margin-top:83px!important}
-.wizard-pane+.wizard-pane{margin-top:17px}
-.panel{border-color:#e1e8f2;border-radius:13px;box-shadow:0 5px 24px rgba(28,48,80,.035);margin-bottom:0}
-.panel-head{padding:17px 22px;min-height:57px}
-.panel-title{font-size:16px}
-.panel-body{padding:21px 22px 24px}
-.fields{gap:17px 16px}
-.field label{font-size:12px;color:#62758e;margin-bottom:7px}
-.input,select,textarea{min-height:42px;border-color:#dbe4ef;border-radius:8px}
-.input:focus,select:focus{border-color:#7fa5fb}
-.field:has(#orderName){grid-column:span 4}
-.wizard-pane[data-step="0"] .info-strip{display:none}
-.wizard-pane[data-step="0"] .field:has(#customerName){grid-column:span 2}
-.wizard-pane[data-step="0"] .field:has(#orderName){grid-column:span 4}
-.measure-layout{display:grid;grid-template-columns:minmax(200px,290px) minmax(0,1fr);gap:24px;align-items:center}
-.measure-visual{background:linear-gradient(140deg,#f8fbff,#eef4ff);border:1px solid #e4edfc;border-radius:13px;padding:16px}
-.measure-visual svg{width:100%;height:auto;display:block}
-.measure-visual p{font-size:12px;color:#5474ad;margin:5px 0 0;text-align:center}
-.measure-layout .fields{grid-template-columns:repeat(3,minmax(0,1fr))}
-.direction-choices{gap:10px}
-.direction-choice{min-width:120px}
-.direction-choice svg{width:100px;height:76px}
-.direction-choice .direction-number{color:#4269a9}
-#saveOrderBtn{display:none}
-.order-actionbar{position:sticky;bottom:0;z-index:45;display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid #e0e8f4;border-radius:13px;padding:12px 16px;margin-top:20px;box-shadow:0 -5px 26px rgba(24,48,86,.07)}
-.order-actionbar .action-info{font-size:12px;color:#7d8da4}
-.order-actionbar .action-buttons{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.order-actionbar .action-buttons button{border:1px solid #d8e3f4;background:#fff;color:#2859c4;border-radius:9px;padding:10px 14px;font-weight:700}
-.order-actionbar .action-buttons button.primary{background:#3268e8;border-color:#3268e8;color:white}
-#saveStatus{font-size:12px}
-@media(max-width:1150px){.measure-layout{grid-template-columns:1fr}.measure-visual{max-width:310px}.measure-layout .fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:750px){.sidebar{position:relative;height:auto;flex:auto}.main>.wizard{padding:9px 12px!important}.content{padding:20px 13px 100px}.measure-layout .fields{grid-template-columns:1fr}.order-actionbar{align-items:stretch;flex-direction:column}.order-actionbar .action-buttons{justify-content:flex-end}}
-
-/* Hidden state must override the wizard's forced display rules. */
-.wizard-pane[hidden],.main>.wizard>.wiz-step[hidden]{display:none!important}
-</style></head><body><div class="layout"><aside class="sidebar">
-<div class="brand"><span class="mark">A</span><div><strong>AtaPark</strong><small>ERP SYSTEM</small></div></div>
-<div><div class="menu-label">İŞ SAHƏSİ</div><div class="nav">
-<button><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10H3z"/><path d="M9 21v-7h6v7"/></svg>İdarə paneli</button>
-<button class="active"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Satış sifarişləri</button>
-<button><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM8 7V4h8v3M4 12h16"/></svg>Məhsullar</button>
-<button><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-7h6v7"/></svg>Anbar</button>
-<button><svg viewBox="0 0 24 24"><path d="M4 20V9h16v11M8 9V4h8v5M8 14h8"/></svg>İstehsalat</button>
-<button><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h17M8 15l4-5 4 2 4-6"/></svg>Hesabatlar</button>
-</div></div>
-<div class="sidebar-foot"><span class="avatar">AP</span>AtaPark · Dizayn prototipi</div>
-</aside><main class="main"><header class="topbar"><div class="crumb">Satış sifarişləri &nbsp;/&nbsp; <b>Yeni sifariş</b></div><div class="top-right"><span class="pill">DEMO REJİM</span><span>◯</span></div></header><div class="wizard" id="wizard"><button type="button" class="wiz-step current"><span class="circle">1</span><span><strong>Sifariş</strong><small>Müştəri və tarix</small></span></button><button type="button" class="wiz-step "><span class="circle">2</span><span><strong>Ölçülər</strong><small>Ölçü və dizayn</small></span></button><button type="button" class="wiz-step "><span class="circle">3</span><span><strong>Çap və material</strong><small>Qat və material</small></span></button><button type="button" class="wiz-step "><span class="circle">4</span><span><strong>Laminasiya</strong><small>İki qat laminasiya</small></span></button><button type="button" class="wiz-step "><span class="circle">5</span><span><strong>Məhsul və qablaşdırma</strong><small>Bobin və təhvil</small></span></button><button type="button" class="wiz-step "><span class="circle">6</span><span><strong>Material</strong><small>Material 1–3</small></span></button><button type="button" class="wiz-step"><span class="circle">7</span><span><strong>Çap hazırlıqları</strong><small>8 unit</small></span></button><button type="button" class="wiz-step"><span class="circle">8</span><span><strong>Hesablamalar</strong><small>Avtomatik nəticələr</small></span></button></div><div class="content"><div class="heading"><div><h1>Yeni satış sifarişi</h1><div class="sub">Sifarişin texniki məlumatlarını bölmələr üzrə daxil edin.</div></div><div class="actions"><span class="pill">8 BÖLMƏLİ FORMA</span></div></div><div id="wizard-panes"><div class="wizard-pane current" data-step="0"><section class="panel"><div class="panel-head"><span class="panel-title">Müştəri və sifariş</span><span class="step">1-ci bölmə</span></div><div class="panel-body"><div class="fields">
-<div class="field"><label for="orderDate">Sifariş tarixi</label><input class="input" id="orderDate" type="date"></div>
-<div class="field"><label for="orderNumber">№ (sıra)</label><input class="input" id="orderNumber" type="number" min="1" placeholder="Sıra nömrəsi"></div>
-<div class="field"><label for="customerCode">Müştəri kodu</label><input class="input" id="customerCode" type="text" readonly placeholder="Logo ERP-dən seçilir"></div>
-<div class="field"><label for="customerSequence">Müştəri üzrə sıra №</label><input class="input" id="customerSequence" type="number" min="1" placeholder="Sıra №"></div>
-<div class="field"><label for="orderCode">Sifariş kodu</label><input class="input" id="orderCode" type="text" placeholder="Sifariş kodu"></div>
-<div class="field wide"><label for="customerName">Şirkətin adı</label><div class="customer"><input class="input" id="customerName" type="text" readonly placeholder="Logo ERP-dən müştəri seçin"><button type="button" class="lookup" id="chooseCustomer" title="Müştəri seç">⌕</button></div></div>
-<div class="field wide"><label for="orderName">Sifariş adı</label><input class="input" id="orderName" type="text" placeholder="Sifarişin adını daxil edin"></div>
-</div><div class="info-strip" style="margin-top:16px">Müştəri və müştəri kodu Logo ERP-dən alınacaq. İnteqrasiya qoşulana qədər müştəri seçimi aktiv deyil.</div></div></section></div><div class="wizard-pane" data-step="1"><section class="panel"><div class="panel-head"><span class="panel-title">Ölçülər</span><span class="step">2-ci bölmə</span></div><div class="panel-body"><div class="measure-layout"><div class="measure-visual"><svg viewBox="0 0 320 210" role="img" aria-label="Material rulonunun eni və uzunluğu üzrə ölçü sxemi"><defs><linearGradient id="roll" x1="0" x2="1"><stop stop-color="#dce6f3"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#c7d6e9"/></linearGradient></defs><path d="M63 78 Q73 41 108 44 L247 44 Q273 46 280 70 L280 143 Q266 126 245 127 L107 127 Q69 126 63 101Z" fill="url(#roll)" stroke="#b9cbe0" stroke-width="2"/><ellipse cx="68" cy="88" rx="29" ry="45" fill="#cbd9e9" stroke="#a4bad3" stroke-width="2"/><ellipse cx="68" cy="88" rx="12" ry="21" fill="#73879d"/><ellipse cx="68" cy="88" rx="6" ry="11" fill="#eef4fb"/><path d="M105 127 Q175 128 244 127 L294 177 Q198 187 116 174Z" fill="#fefefe" stroke="#b9cbe0" stroke-width="2"/><path d="M104 25 H273 M104 20 V30 M273 20 V30" stroke="#3268e8" stroke-width="2"/><text x="188" y="16" text-anchor="middle" font-size="13" fill="#2859c4" font-weight="700">Dizayn uzunluğu</text><path d="M22 45 V173 M17 45 H27 M17 173 H27" stroke="#3268e8" stroke-width="2"/><text x="12" y="114" text-anchor="middle" font-size="12" fill="#2859c4" font-weight="700" transform="rotate(-90 12 114)">Dizayn eni</text></svg><p>En və uzunluq üçün vizual ölçü sxemi</p></div><div class="fields"><div class="field"><label for="designWidth">Dizayn eni (mm)</label><input class="input" id="designWidth" type="number" min="0" step="any"></div><div class="field"><label for="designLength">Dizayn uzunluğu (mm)</label><input class="input" id="designLength" type="number" min="0" step="any"></div><div class="field"><label for="approxPlateWidth">Təqribi klişe eni</label><input class="input" id="approxPlateWidth" type="number" min="0" step="any"></div><div class="field"><label for="designCount">Hər dizayn sayı</label><input class="input" id="designCount" type="number" min="0" step="any"></div><div class="field"><label for="widthCount">En üzrə say (YY)</label><input class="input" id="widthCount" type="number" min="0" step="any"></div><div class="field"><label for="lengthCount">Boy üzrə say (AA)</label><input class="input" id="lengthCount" type="number" min="0" step="any"></div><div class="field"><label for="colorCount">Rəng sayı</label><select id="colorCount"><option value="-">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="2+1">2+1</option><option value="3+1">3+1</option><option value="4+1">4+1</option><option value="5+1">5+1</option><option value="6+1">6+1</option><option value="7+1">7+1</option><option value="4+2">4+2</option></select></div><div class="field"><label for="materialWidth">Materialın eni (mm)</label><input class="input" id="materialWidth" type="number" min="0" step="any"></div><div class="field"><label for="warehouseRaw">Anbardakı xammal</label><input class="input" id="warehouseRaw" type="text" placeholder="Xammal"></div><div class="field"><label for="orderThickness">Sifariş qalınlığı (mic)</label><select id="orderThickness"><option value="12">12</option><option value="18">18</option><option value="20">20</option><option value="23">23</option><option value="25">25</option><option value="28">28</option><option value="30">30</option><option value="32">32</option><option value="33">33</option><option value="35">35</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="42">42</option><option value="44">44</option><option value="45">45</option><option value="49">49</option><option value="50">50</option><option value="52">52</option><option value="54">54</option><option value="55">55</option><option value="57">57</option><option value="60">60</option><option value="62">62</option><option value="64">64</option><option value="65">65</option><option value="70">70</option><option value="72">72</option><option value="74">74</option><option value="75">75</option><option value="80">80</option><option value="82">82</option><option value="84">84</option><option value="85">85</option><option value="90">90</option><option value="94">94</option><option value="95">95</option><option value="97">97</option><option value="100">100</option><option value="102">102</option><option value="105">105</option><option value="110">110</option><option value="115">115</option><option value="120">120</option><option value="125">125</option><option value="130">130</option><option value="135">135</option><option value="140">140</option><option value="145">145</option><option value="150">150</option><option value="155">155</option><option value="160">160</option></select></div><div class="field"><label for="zedSize">Zed ölçüsü</label><input class="input" id="zedSize" type="number" min="0" step="any"></div><div class="field"><label for="potSize">Qazan ölçüsü</label><select id="potSize"><option value="0">0</option><option value="370">370</option><option value="380">380</option><option value="390">390</option><option value="400">400</option><option value="420">420</option><option value="430">430</option><option value="440">440</option><option value="450">450</option><option value="480">480</option><option value="500">500</option><option value="510">510</option><option value="530">530</option><option value="540">540</option><option value="550">550</option><option value="570">570</option><option value="580">580</option><option value="600">600</option><option value="610">610</option><option value="620">620</option><option value="640">640</option><option value="660">660</option><option value="680">680</option><option value="700">700</option></select></div></div></div></div></section></div><div class="wizard-pane" data-step="2"><section class="panel"><div class="panel-head"><span class="panel-title">Çap və material</span><span class="step">3-cü bölmə</span></div><div class="panel-body"><div class="fields"><div class="field"><label for="layerCount">Qat sayı</label><select id="layerCount"><option value="-">-</option><option value="Tək qat">Tək qat</option><option value="İki qat">İki qat</option><option value="Üç qat">Üç qat</option></select></div><div class="field"><label for="printType">Çap növü</label><select id="printType"><option value="-">-</option><option value="Üst Çap">Üst Çap</option><option value="Alt Çap">Alt Çap</option><option value="Çapsız">Çapsız</option></select></div><div class="field"><label for="printMaterial">Çap materialının növü</label><select id="printMaterial"><option value="-">-</option><option value="BOPP Şəffaf">BOPP Şəffaf</option><option value="BOPP Mat">BOPP Mat</option><option value="BOPP Metalizə">BOPP Metalizə</option><option value="BOPP Sədəf">BOPP Sədəf</option><option value="BOPP Cold seal">BOPP Cold seal</option><option value="CPP Şəffaf">CPP Şəffaf</option><option value="CPP Metalizə">CPP Metalizə</option><option value="CPP Ağ">CPP Ağ</option><option value="PET Şəffaf">PET Şəffaf</option><option value="PET Mat">PET Mat</option><option value="PET Metalizə">PET Metalizə</option><option value="PET Tvist Şəffaf">PET Tvist Şəffaf</option><option value="PET Tvist Metalizə">PET Tvist Metalizə</option><option value="PET Tvist Ağ">PET Tvist Ağ</option><option value="PET opak">PET opak</option><option value="PVC">PVC</option><option value="PP Şəffaf">PP Şəffaf</option><option value="PP OPAK">PP OPAK</option><option value="PP Metalizə">PP Metalizə</option><option value="PE Şəffaf">PE Şəffaf</option><option value="PE Ağ">PE Ağ</option><option value="PLEN">PLEN</option><option value="PETG">PETG</option><option value="PETG Şəffaf">PETG Şəffaf</option><option value="PETG Ağ">PETG Ağ</option><option value="ULTRA Clear">ULTRA Clear</option><option value="KUŞE">KUŞE</option><option value="Şərab kağızı">Şərab kağızı</option><option value="TOP TERMAL">TOP TERMAL</option><option value="Dərman kağızı">Dərman kağızı</option><option value="TSHL">TSHL</option><option value="Kağız">Kağız</option><option value="Perqament">Perqament</option><option value="Falqa">Falqa</option><option value="Margarin yağ kağızı">Margarin yağ kağızı</option><option value="Kərə yağ kağızı">Kərə yağ kağızı</option><option value="PE Shrink">PE Shrink</option><option value="Mix pup">Mix pup</option><option value="OPS">OPS</option><option value="OPP Metalizə">OPP Metalizə</option><option value="Polietilen Mat">Polietilen Mat</option><option value="Hohl">Hohl</option></select></div><div class="field"><label for="coldSeal">Cold seal ölçü (sm)</label><input class="input" id="coldSeal" type="number" min="0" step="any"></div><div class="field"><label for="printThickness">Qalınlıq 1 (mic)</label><select id="printThickness"><option value="12">12</option><option value="18">18</option><option value="20">20</option><option value="23">23</option><option value="25">25</option><option value="28">28</option><option value="30">30</option><option value="32">32</option><option value="33">33</option><option value="35">35</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="42">42</option><option value="44">44</option><option value="45">45</option><option value="49">49</option><option value="50">50</option><option value="52">52</option><option value="54">54</option><option value="55">55</option><option value="57">57</option><option value="60">60</option><option value="62">62</option><option value="64">64</option><option value="65">65</option><option value="70">70</option><option value="72">72</option><option value="74">74</option><option value="75">75</option><option value="80">80</option><option value="82">82</option><option value="84">84</option><option value="85">85</option><option value="90">90</option><option value="94">94</option><option value="95">95</option><option value="97">97</option><option value="100">100</option><option value="102">102</option><option value="105">105</option><option value="110">110</option><option value="115">115</option><option value="120">120</option><option value="125">125</option><option value="130">130</option><option value="135">135</option><option value="140">140</option><option value="145">145</option><option value="150">150</option><option value="155">155</option><option value="160">160</option></select></div><div class="field"><label for="rawMaterialCode">Xammalın kodu</label><input class="input" id="rawMaterialCode" type="text" ></div><div class="field"><label for="density">Density</label><input class="input" id="density" type="number" min="0" step="any"></div><div class="field"><label for="colorComposition">Rəng tərkibi</label><select id="colorComposition"><option value="-">-</option><option value="Bəyaz Vakslı">Bəyaz Vakslı</option><option value="Bəyaz Vakssız">Bəyaz Vakssız</option><option value="Bəyaz Opak">Bəyaz Opak</option><option value="Bəyaz Slikonlu">Bəyaz Slikonlu</option><option value="White-PET-SPT 7700">White-PET-SPT 7700</option><option value="White-BOPP-SLM 7010">White-BOPP-SLM 7010</option></select></div><div class="field"><label for="bottomVarnish">Alt lak</label><select id="bottomVarnish"><option value="-">-</option><option value="Primer">Primer</option></select></div><div class="field"><label for="topVarnish">Üst lak</label><select id="topVarnish"><option value="-">-</option><option value="OPV Parlaq">OPV Parlaq</option><option value="OPV Mat">OPV Mat</option></select></div></div></div></section></div><div class="wizard-pane" data-step="3"><section class="panel"><div class="panel-head"><span class="panel-title">Laminasiya</span><span class="step">4-cü bölmə</span></div><div class="panel-body"><div class="fields"><div class="full" style="font-size:16px;font-weight:700;color:#64748b;margin:16px 0 0">Laminasiya 1</div><div class="field"><label for="lamMaterial1">Materialın növü</label><select id="lamMaterial1"><option value="-">-</option><option value="BOPP Şəffaf">BOPP Şəffaf</option><option value="BOPP Mat">BOPP Mat</option><option value="BOPP Metalizə">BOPP Metalizə</option><option value="BOPP Sədəf">BOPP Sədəf</option><option value="CPP Şəffaf">CPP Şəffaf</option><option value="CPP Metalizə">CPP Metalizə</option><option value="CPP Ağ">CPP Ağ</option><option value="PET Şəffaf">PET Şəffaf</option><option value="PET Metalizə">PET Metalizə</option><option value="PET Ağ">PET Ağ</option><option value="PE Şəffaf">PE Şəffaf</option><option value="PE Ağ">PE Ağ</option><option value="Politelin">Politelin</option><option value="Politelin Bəyaz">Politelin Bəyaz</option><option value="Polietilen Bəyaz">Polietilen Bəyaz</option><option value="Kağız">Kağız</option><option value="Falqa">Falqa</option><option value="Alüminium falqa">Alüminium falqa</option><option value="Kərə yağ kağızı">Kərə yağ kağızı</option><option value="Hohl">Hohl</option><option value="Mat lak">Mat lak</option><option value="Baryer film">Baryer film</option><option value="PA film">PA film</option></select></div><div class="field"><label for="lamThickness1">Qalınlıq 2 (mic)</label><select id="lamThickness1"><option value="12">12</option><option value="18">18</option><option value="20">20</option><option value="23">23</option><option value="25">25</option><option value="28">28</option><option value="30">30</option><option value="32">32</option><option value="33">33</option><option value="35">35</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="42">42</option><option value="44">44</option><option value="45">45</option><option value="49">49</option><option value="50">50</option><option value="52">52</option><option value="54">54</option><option value="55">55</option><option value="57">57</option><option value="60">60</option><option value="62">62</option><option value="64">64</option><option value="65">65</option><option value="70">70</option><option value="72">72</option><option value="74">74</option><option value="75">75</option><option value="80">80</option><option value="82">82</option><option value="84">84</option><option value="85">85</option><option value="90">90</option><option value="94">94</option><option value="95">95</option><option value="97">97</option><option value="100">100</option><option value="102">102</option><option value="105">105</option><option value="110">110</option><option value="115">115</option><option value="120">120</option><option value="125">125</option><option value="130">130</option><option value="135">135</option><option value="140">140</option><option value="145">145</option><option value="150">150</option><option value="155">155</option><option value="160">160</option></select></div><div class="field"><label for="lamRawCode1">Xammalın kodu</label><input class="input" id="lamRawCode1" type="text"></div><div class="field"><label for="lamDensity1">Density</label><input class="input" id="lamDensity1" type="number" min="0" step="any"></div><div class="full" style="font-size:16px;font-weight:700;color:#64748b;margin:16px 0 0">Laminasiya 2</div><div class="field"><label for="lamMaterial2">Materialın növü</label><select id="lamMaterial2"><option value="-">-</option><option value="BOPP Şəffaf">BOPP Şəffaf</option><option value="BOPP Mat">BOPP Mat</option><option value="BOPP Metalizə">BOPP Metalizə</option><option value="BOPP Sədəf">BOPP Sədəf</option><option value="CPP Şəffaf">CPP Şəffaf</option><option value="CPP Metalizə">CPP Metalizə</option><option value="CPP Ağ">CPP Ağ</option><option value="PET Şəffaf">PET Şəffaf</option><option value="PET Metalizə">PET Metalizə</option><option value="PET Ağ">PET Ağ</option><option value="PE Şəffaf">PE Şəffaf</option><option value="PE Ağ">PE Ağ</option><option value="Politelin">Politelin</option><option value="Politelin Bəyaz">Politelin Bəyaz</option><option value="Polietilen Bəyaz">Polietilen Bəyaz</option><option value="Kağız">Kağız</option><option value="Falqa">Falqa</option><option value="Alüminium falqa">Alüminium falqa</option><option value="Kərə yağ kağızı">Kərə yağ kağızı</option><option value="Hohl">Hohl</option><option value="Mat lak">Mat lak</option><option value="Baryer film">Baryer film</option><option value="PA film">PA film</option></select></div><div class="field"><label for="lamThickness2">Qalınlıq 3 (mic)</label><select id="lamThickness2"><option value="12">12</option><option value="18">18</option><option value="20">20</option><option value="23">23</option><option value="25">25</option><option value="28">28</option><option value="30">30</option><option value="32">32</option><option value="33">33</option><option value="35">35</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="42">42</option><option value="44">44</option><option value="45">45</option><option value="49">49</option><option value="50">50</option><option value="52">52</option><option value="54">54</option><option value="55">55</option><option value="57">57</option><option value="60">60</option><option value="62">62</option><option value="64">64</option><option value="65">65</option><option value="70">70</option><option value="72">72</option><option value="74">74</option><option value="75">75</option><option value="80">80</option><option value="82">82</option><option value="84">84</option><option value="85">85</option><option value="90">90</option><option value="94">94</option><option value="95">95</option><option value="97">97</option><option value="100">100</option><option value="102">102</option><option value="105">105</option><option value="110">110</option><option value="115">115</option><option value="120">120</option><option value="125">125</option><option value="130">130</option><option value="135">135</option><option value="140">140</option><option value="145">145</option><option value="150">150</option><option value="155">155</option><option value="160">160</option></select></div><div class="field"><label for="lamRawCode2">Xammalın kodu</label><input class="input" id="lamRawCode2" type="text"></div><div class="field"><label for="lamDensity2">Density</label><input class="input" id="lamDensity2" type="number" min="0" step="any"></div></div></div></section></div><div class="wizard-pane" data-step="4"><section class="panel"><div class="panel-head"><span class="panel-title">Məhsul və qablaşdırma</span><span class="step">5-ci bölmə</span></div><div class="panel-body"><div class="fields"><div class="field"><label for="productType">Məhsul növü</label><select id="productType"><option value="-">-</option><option value="Açıq">Açıq</option><option value="Boru">Boru</option></select></div><div class="field"><label for="orderType">Sifariş növü</label><select id="orderType"><option value="-">-</option><option value="Sticker">Sticker</option><option value="Sleeve">Sleeve</option><option value="Etiket">Etiket</option><option value="Ambalaj">Ambalaj</option><option value="Wraparound">Wraparound</option><option value="Sadə paket">Sadə paket</option><option value="Çörək paketi">Çörək paketi</option></select></div><div class="field"><label for="usageType">İstifadə şəkli</label><select id="usageType"><option value="-">-</option><option value="Rulon">Rulon</option><option value="Əl etiketi">Əl etiketi</option><option value="Çörək paketi">Çörək paketi</option><option value="Sadə paket">Sadə paket</option></select></div><div class="field"><label for="knifeType">Bıçaq növü</label><select id="knifeType"><option value="-">-</option><option value="Taxta">Taxta</option><option value="Manyetik">Manyetik</option><option value="Tabaka">Tabaka</option></select></div><div class="field"><label for="sealWidth">Yapışma eni (mm)</label><input class="input" id="sealWidth" type="number" min="0" step="any"></div><div class="field"><label for="sealLength">Yapışma uzunluğu (mm)</label><input class="input" id="sealLength" type="number" min="0" step="any"></div><div class="field"><label for="perforation">Perforasiya</label><select id="perforation"><option value="-">-</option><option value="Düz">Düz</option><option value="Formalı">Formalı</option></select></div><div class="field full"><label>Açılış yönü</label><div class="direction-choices" role="radiogroup" aria-label="Açılış yönü"><label class="direction-choice"><input type="radio" name="openingDirection" value="1"><span class="direction-art"><svg viewBox="0 0 110 84" width="110" height="84" aria-hidden="true"><rect x="2" y="2" width="106" height="80" rx="7" fill="#f8fafc" stroke="#d9e2ef"/><g transform="translate(47 41) rotate(270)"><text x="-25" y="23" font-size="65" font-family="Arial,sans-serif" font-weight="700" fill="#24354c">A</text></g><circle cx="87" cy="20" r="9" fill="#fff" stroke="#344054" stroke-width="2"/><circle cx="87" cy="20" r="3" fill="#344054"/><path d="M87 32 V65 M80 58 L87 66 L94 58" fill="none" stroke="#344054" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="direction-number">Variant 1</span></label><label class="direction-choice"><input type="radio" name="openingDirection" value="2"><span class="direction-art"><svg viewBox="0 0 110 84" width="110" height="84" aria-hidden="true"><rect x="2" y="2" width="106" height="80" rx="7" fill="#f8fafc" stroke="#d9e2ef"/><g transform="translate(47 41) rotate(90)"><text x="-25" y="23" font-size="65" font-family="Arial,sans-serif" font-weight="700" fill="#24354c">A</text></g><circle cx="87" cy="20" r="9" fill="#fff" stroke="#344054" stroke-width="2"/><circle cx="87" cy="20" r="3" fill="#344054"/><path d="M87 32 V65 M80 58 L87 66 L94 58" fill="none" stroke="#344054" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="direction-number">Variant 2</span></label><label class="direction-choice"><input type="radio" name="openingDirection" value="3"><span class="direction-art"><svg viewBox="0 0 110 84" width="110" height="84" aria-hidden="true"><rect x="2" y="2" width="106" height="80" rx="7" fill="#f8fafc" stroke="#d9e2ef"/><g transform="translate(47 41) rotate(180)"><text x="-25" y="23" font-size="65" font-family="Arial,sans-serif" font-weight="700" fill="#24354c">A</text></g><circle cx="87" cy="20" r="9" fill="#fff" stroke="#344054" stroke-width="2"/><circle cx="87" cy="20" r="3" fill="#344054"/><path d="M87 32 V65 M80 58 L87 66 L94 58" fill="none" stroke="#344054" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="direction-number">Variant 3</span></label><label class="direction-choice"><input type="radio" name="openingDirection" value="4"><span class="direction-art"><svg viewBox="0 0 110 84" width="110" height="84" aria-hidden="true"><rect x="2" y="2" width="106" height="80" rx="7" fill="#f8fafc" stroke="#d9e2ef"/><g transform="translate(47 41) rotate(0)"><text x="-25" y="23" font-size="65" font-family="Arial,sans-serif" font-weight="700" fill="#24354c">A</text></g><circle cx="87" cy="20" r="9" fill="#fff" stroke="#344054" stroke-width="2"/><circle cx="87" cy="20" r="3" fill="#344054"/><path d="M87 32 V65 M80 58 L87 66 L94 58" fill="none" stroke="#344054" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="direction-number">Variant 4</span></label></div><small style="color:#64748b">Şəkilə baxaraq uyğun açılış istiqamətini seçin.</small></div><div class="field"><label for="bobbinDirection">Bobin yönü</label><select id="bobbinDirection"><option value="-">-</option><option value="Üstə">Üstə</option><option value="Altdə">Altdə</option></select></div><div class="field"><label for="deliveryDate">Təslim tarixi</label><input class="input" id="deliveryDate" type="date" ></div><div class="field"><label for="bobbinWeight">Bobin çəki / diameter</label><input class="input" id="bobbinWeight" type="text" ></div><div class="field"><label for="coreSize">Masura ölçüsü</label><select id="coreSize"><option value="-">-</option><option value="40 mm">40 mm</option><option value="76 mm">76 mm</option><option value="78 mm">78 mm</option><option value="125 mm">125 mm</option><option value="152 mm">152 mm</option></select></div><div class="field"><label for="packagingTerms">Qablaşdırma şərtləri</label><select id="packagingTerms"><option value="-">-</option><option value="Streç">Streç</option><option value="Qutu">Qutu</option><option value="Paket">Paket</option><option value="Paket və Qutu">Paket və Qutu</option></select></div><div class="field"><label for="plateCondition">Klişənin vəziyyəti</label><select id="plateCondition"><option value="-">-</option><option value="Sağlam">Sağlam</option><option value="Köhnəlmiş">Köhnəlmiş</option><option value="Yararsız">Yararsız</option><option value="Yoxdur">Yoxdur</option><option value="Revize">Revize</option></select></div><div class="field"><label for="approvalMethod">Təsdiq forması</label><select id="approvalMethod"><option value="-">-</option><option value="Müştəri gələcək">Müştəri gələcək</option><option value="Şəkil ilə">Şəkil ilə</option><option value="Satış nümayəndəsi">Satış nümayəndəsi</option><option value="Satış təsdiqi">Satış təsdiqi</option><option value="Göndərilən nümunə">Göndərilən nümunə</option><option value="Keyfiyyət meneceri">Keyfiyyət meneceri</option><option value="Müştəriyə göndəriləcək">Müştəriyə göndəriləcək</option><option value="Kromalin ilə">Kromalin ilə</option></select></div><div class="field"><label for="gusset">Körük (sm)</label><input class="input" id="gusset" type="number" min="0" step="any"></div><div class="field"><label for="colorNames">Rəng adları</label><input class="input" id="colorNames" type="text" ></div></div></div></section></div><div class="wizard-pane" data-step="5"><section class="panel"><div class="panel-head"><span class="panel-title">Material</span><span class="step">6-cı bölmə</span></div><div class="panel-body"><div class="fields"><div class="field"><label for="materialSummary1">Material-1</label><input class="input" id="materialSummary1" type="text" readonly placeholder="Material seçilməyib"></div><div class="field"><label for="materialSummary2">Material-2</label><input class="input" id="materialSummary2" type="text" readonly placeholder="Material seçilməyib"></div><div class="field"><label for="materialSummary3">Material-3</label><input class="input" id="materialSummary3" type="text" readonly placeholder="Material seçilməyib"></div></div></div></section></div><div class="wizard-pane current" data-step="6"><section class="panel"><div class="panel-head"><span class="panel-title">Çap hazırlıqları</span><span class="step">7-ci bölmə</span></div><div class="panel-body"><div style="overflow-x:auto"><table class="print-units" style="width:100%;border-collapse:separate;border-spacing:10px 9px;min-width:760px"><thead><tr><th style="text-align:left">Unit</th><th style="text-align:left">Rəng</th><th style="text-align:left">Tərkib miqdarı</th><th style="text-align:left">Tesa</th><th style="text-align:left">Anilox</th><th style="text-align:left">Viscose</th></tr></thead><tbody><tr><th style="white-space:nowrap;text-align:left">Unit 1</th><td><input class="input" type="text"  aria-label="Unit 1 — Rəng" id="unit1_0"></td><td><input class="input" type="text"  aria-label="Unit 1 — Tərkib miqdarı" id="unit1_1"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 1 — Tesa" id="unit1_2"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 1 — Anilox" id="unit1_3"></td><td><input class="input" type="text"  aria-label="Unit 1 — Viscose" id="unit1_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 2</th><td><input class="input" type="text"  aria-label="Unit 2 — Rəng" id="unit2_0"></td><td><input class="input" type="text"  aria-label="Unit 2 — Tərkib miqdarı" id="unit2_1"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 2 — Tesa" id="unit2_2"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 2 — Anilox" id="unit2_3"></td><td><input class="input" type="text"  aria-label="Unit 2 — Viscose" id="unit2_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 3</th><td><input class="input" type="text"  aria-label="Unit 3 — Rəng" id="unit3_0"></td><td><input class="input" type="text"  aria-label="Unit 3 — Tərkib miqdarı" id="unit3_1"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 3 — Tesa" id="unit3_2"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 3 — Anilox" id="unit3_3"></td><td><input class="input" type="text"  aria-label="Unit 3 — Viscose" id="unit3_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 4</th><td><input class="input" type="text"  aria-label="Unit 4 — Rəng" id="unit4_0"></td><td><input class="input" type="text"  aria-label="Unit 4 — Tərkib miqdarı" id="unit4_1"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 4 — Tesa" id="unit4_2"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 4 — Anilox" id="unit4_3"></td><td><input class="input" type="text"  aria-label="Unit 4 — Viscose" id="unit4_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 5</th><td><input class="input" type="text"  aria-label="Unit 5 — Rəng" id="unit5_0"></td><td><input class="input" type="text"  aria-label="Unit 5 — Tərkib miqdarı" id="unit5_1"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 5 — Tesa" id="unit5_2"></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 5 — Anilox" id="unit5_3"></td><td><input class="input" type="text"  aria-label="Unit 5 — Viscose" id="unit5_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 6</th><td><input class="input" type="text"  aria-label="Unit 6 — Rəng" id="unit6_0"></td><td><input class="input" type="text"  aria-label="Unit 6 — Tərkib miqdarı" id="unit6_1"></td><td></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 6 — Anilox" id="unit6_3"></td><td><input class="input" type="text"  aria-label="Unit 6 — Viscose" id="unit6_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 7</th><td><input class="input" type="text"  aria-label="Unit 7 — Rəng" id="unit7_0"></td><td><input class="input" type="text"  aria-label="Unit 7 — Tərkib miqdarı" id="unit7_1"></td><td></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 7 — Anilox" id="unit7_3"></td><td><input class="input" type="text"  aria-label="Unit 7 — Viscose" id="unit7_4"></td></tr><tr><th style="white-space:nowrap;text-align:left">Unit 8</th><td><input class="input" type="text"  aria-label="Unit 8 — Rəng" id="unit8_0"></td><td><input class="input" type="text"  aria-label="Unit 8 — Tərkib miqdarı" id="unit8_1"></td><td></td><td><input class="input" type="number" min="0" step="any" aria-label="Unit 8 — Anilox" id="unit8_3"></td><td><input class="input" type="text"  aria-label="Unit 8 — Viscose" id="unit8_4"></td></tr></tbody></table></div></div></section></div></div><div class="wizard-pane current" data-step="7"><section class="panel"><div class="panel-head"><span class="panel-title">Hesablamalar</span><span class="step">8-ci bölmə</span></div><div class="panel-body"><div style="max-width:660px"><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Metrekare (m²)</span><strong id="calcArea" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Hər paket (qr)</span><strong id="calcPackGram" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Paket sayı</span><strong id="calcPackCount" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">1 m = qr (material 1)</span><strong id="calcGram1" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">1 m = qr (lam. 1)</span><strong id="calcGram2" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">1 m = qr (lam. 2)</span><strong id="calcGram3" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Material 1, %</span><strong id="calcPct1" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Lam. 1, %</span><strong id="calcPct2" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">Lam. 2, %</span><strong id="calcPct3" style="font-variant-numeric:tabular-nums">—</strong></div><div style="display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #dce4ed"><span style="color:#64748b">1 kq = m (ümumi)</span><strong id="calcKgMeter" style="font-variant-numeric:tabular-nums">—</strong></div><h3 style="margin:24px 0 12px">Material</h3><div id="calcMaterial1" style="padding:12px 14px;background:#f4f6f9;border-radius:9px;margin:8px 0">Material-1: —</div><div id="calcMaterial2" style="padding:12px 14px;background:#f4f6f9;border-radius:9px;margin:8px 0">Material-2: —</div><div id="calcMaterial3" style="padding:12px 14px;background:#f4f6f9;border-radius:9px;margin:8px 0">Material-3: —</div></div></div></section></div><div class="order-actionbar"><div class="action-info"><strong>Yeni satış sifarişi</strong><div>Məlumatları doldurun və yadda saxlayın.</div><span id="saveStatus" role="status" style="color:#64748b"></span></div><div class="action-buttons"><button type="button" id="clearOrderBtn">Təmizlə</button><button type="button" id="saveOrderProxy">Yadda saxla</button><button type="button" class="primary" id="saveAndContinueBtn">Yadda saxla və davam et →</button></div><button type="button" id="saveOrderBtn" style="background:#2563eb;color:white;border:0;border-radius:9px;padding:12px 26px;font:600 14px inherit;cursor:pointer">Yadda saxla</button></div></div></main></div><script>
-(function(){
-const buttons=[...document.querySelectorAll(".wiz-step")];
-const panes=[...document.querySelectorAll(".wizard-pane")];
-const nav=document.getElementById("wizard");
-let targetIndex=-1,lockUntil=0,scheduled=false;
-function visible(i){return panes[i]&&getComputedStyle(panes[i]).display!=="none";}
-function activate(i){
- buttons.forEach((b,j)=>b.classList.toggle("current",i===j));
- const active=buttons[i];if(!active)return;
- const left=active.offsetLeft-nav.offsetLeft,right=left+active.offsetWidth;
- if(left<nav.scrollLeft)nav.scrollLeft=Math.max(0,left-8);
- else if(right>nav.scrollLeft+nav.clientWidth)nav.scrollLeft=right-nav.clientWidth+8;
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="side" id="side">
+<div class="brand"><i>A</i>AtaPark ERP</div>
+<button class="mi" data-v="dash">İdarə paneli</button>
+<div class="grp">Satış sifarişləri</div>
+<button class="mi sub" data-v="list">Sifarişlər siyahısı</button>
+<button class="mi sub" data-v="new">Yeni sifariş</button>
+<div class="grp">Digər modullar</div>
+<button class="mi" data-v="prod">Məhsullar</button>
+<button class="mi" data-v="stock">Anbar</button>
+<button class="mi" data-v="mfg">İstehsalat</button>
+<button class="mi" data-v="rep">Hesabatlar</button>
+</div>
+<div class="content">
+<div class="stripe"></div>
+<div class="top"><div class="crumb" id="crumb"></div><button class="p" id="topNew">+ Yeni sifariş</button></div>
+<div id="v-new">
+<header>
+<h1>Yeni satış sifarişi</h1>
+<p>Doldurduqca sahələr açılır, hesablamalar avtomatik yenilənir.</p>
+</header>
+<nav id="nav" aria-label="Bölmələr"></nav>
+<div class="app">
+<main><form id="form" onsubmit="return false" autocomplete="off"></form></main>
+<aside>
+<div class="card">
+<b id="pct">0%</b> doldurulub
+<div class="bar"><i id="barfill"></i></div>
+<div id="miss"></div>
+<div class="btns">
+<button class="p" id="save">Yadda saxla</button>
+<button id="print">Çap et</button>
+<button id="reset">Formanı təmizlə</button>
+</div>
+<p class="hint" style="margin:12px 0 0">Məlumat yalnız bu brauzerdə saxlanılır. Müştəri kodu ERP qoşulanda avtomatik gələcək.</p>
+</div>
+</aside>
+</div>
+</div>
+<div class="pad" id="v-list" hidden>
+<h1 style="font-size:28px">Sifarişlər siyahısı</h1>
+<div class="res" id="st" style="margin-top:14px"></div>
+<div class="card"><div class="f" style="max-width:360px;margin-bottom:12px"><label for="q">Axtarış</label><input id="q" placeholder="Kod, şirkət və ya sifariş adı"></div>
+<div class="tw"><table><thead><tr><th>Kod</th><th>Şirkət</th><th>Sifariş adı</th><th>Tarix</th><th>Təslim</th><th>Status</th><th></th></tr></thead><tbody id="lb"></tbody></table></div></div>
+</div>
+<div class="pad" id="v-soon" hidden><div class="card"><h1 id="soonT" style="font-size:24px"></h1><p class="hint">Bu modul hələ qurulmayıb. Hazırda yalnız Satış sifarişləri modulu işləyir.</p></div></div>
+</div>
+</div>
+<div id="toast" role="status"></div>
+<script>
+const mic=[12,18,20,23,25,28,30,32,33,35,38,39,40,42,44,45,49,50,52,54,55,57,60,62,64,65,70,72,74,75,80,82,84,85,90,94,95,97,100,102,105,110,115,120,125,130,135,140,145,150,155,160];
+const L=s=>s.split("|");
+const PM=L("BOPP Şəffaf|BOPP Mat|BOPP Metalizə|BOPP Sədəf|BOPP Cold seal|CPP Şəffaf|CPP Metalizə|CPP Ağ|PET Şəffaf|PET Mat|PET Metalizə|PET Tvist Şəffaf|PET Tvist Metalizə|PET Tvist Ağ|PET opak|PVC|PP Şəffaf|PP OPAK|PP Metalizə|PE Şəffaf|PE Ağ|PLEN|PETG|PETG Şəffaf|PETG Ağ|ULTRA Clear|KUŞE|Şərab kağızı|TOP TERMAL|Dərman kağızı|TSHL|Kağız|Perqament|Falqa|Margarin yağ kağızı|Kərə yağ kağızı|PE Shrink|Mix pup|OPS|OPP Metalizə|Polietilen Mat|Hohl");
+const LM=L("BOPP Şəffaf|BOPP Mat|BOPP Metalizə|BOPP Sədəf|CPP Şəffaf|CPP Metalizə|CPP Ağ|PET Şəffaf|PET Metalizə|PET Ağ|PE Şəffaf|PE Ağ|Politelin|Politelin Bəyaz|Polietilen Bəyaz|Kağız|Falqa|Alüminium falqa|Kərə yağ kağızı|Hohl|Mat lak|Baryer film|PA film");
+const DEN=[["BOPP",.91],["OPP",.91],["CPP",.91],["PET",1.4],["PETG",1.27],["PVC",1.35],["PP",.91],["PE",.92],["Polietilen",.92],["Politelin",.92],["OPS",1.05],["Alüminium",2.7]];
+const dens=n=>{const w=(n||"").split(" ")[0];const m=DEN.find(d=>d[0]===w);return m?m[1]:""};
+const qat=()=>({"Tək qat":1,"İki qat":2,"Üç qat":3}[S.qat]||0);
+const printed=()=>!!S.capnov&&S.capnov!=="Çapsız";
+const SEC=[
+{id:"s1",t:"Müştəri və sifariş",f:[
+ {k:"tarix",l:"Sifariş tarixi",t:"date",r:1},
+ {k:"sira",l:"№ (sıra)",t:"number"},
+ {k:"mkod",l:"Müştəri kodu (Logo inteqrasiyası gözlənilir)",t:"text"},
+ {k:"msira",l:"Müştəri üzrə sıra №",t:"number"},
+ {k:"skod",l:"Sifariş kodu",t:"text",ro:1},
+ {k:"sirket",l:"Şirkətin adı",t:"text",r:1,w:2},
+ {k:"sad",l:"Sifariş adı",t:"text",r:1,w:2}]},
+{id:"s2",t:"Ölçülər",f:[
+ {k:"eni",l:"Dizayn eni (mm)",t:"number",r:1},
+ {k:"uzun",l:"Dizayn uzunluğu (mm)",t:"number",r:1},
+ {k:"klise",l:"Təqribi klişe eni (mm)",t:"number"},
+ {k:"hdsay",l:"Hər dizayn sayı",t:"number"},
+ {k:"yy",l:"En üzrə say (YY)",t:"number"},
+ {k:"aa",l:"Boy üzrə say (AA)",t:"number"},
+ {k:"reng",l:"Rəng sayı",t:"select",o:L("1|2|3|4|5|6|7|8|2+1|3+1|4+1|5+1|6+1|7+1|4+2"),s:printed},
+ {k:"meni",l:"Materialın eni (mm)",t:"number",r:1},
+ {k:"anbar",l:"Anbardakı xammal",t:"text"},
+ {k:"qal",l:"Sifariş qalınlığı (mic)",t:"select",o:mic},
+ {k:"zed",l:"Zed ölçüsü",t:"number"},
+ {k:"qazan",l:"Qazan ölçüsü",t:"select",o:[0,370,380,390,400,420,430,440,450,480,500,510,530,540,550,570,580,600,610,620,640,660,680,700]},
+ {k:"miqdar",l:"Paket sayı (sifariş miqdarı)",t:"number",r:1}]},
+{id:"s3",t:"Çap və material",f:[
+ {k:"qat",l:"Qat sayı",t:"select",o:L("Tək qat|İki qat|Üç qat"),r:1},
+ {k:"capnov",l:"Çap növü",t:"select",o:L("Üst Çap|Alt Çap|Çapsız"),r:1},
+ {k:"capmat",l:"Çap materialının növü",t:"select",o:PM,r:1,w:2},
+ {k:"cold",l:"Cold seal ölçü (sm)",t:"number",s:()=>/Cold seal/.test(S.capmat||"")},
+ {k:"qal1",l:"Qalınlıq 1 (mic)",t:"select",o:mic,r:1},
+ {k:"kod1",l:"Xammalın kodu",t:"text"},
+ {k:"den1",l:"Density (q/sm³)",t:"number"},
+ {k:"rengt",l:"Rəng tərkibi",t:"select",o:L("Bəyaz Vakslı|Bəyaz Vakssız|Bəyaz Opak|Bəyaz Slikonlu|White-PET-SPT 7700|White-BOPP-SLM 7010")},
+ {k:"altlak",l:"Alt lak",t:"select",o:["Primer"],s:printed},
+ {k:"ustlak",l:"Üst lak",t:"select",o:L("OPV Parlaq|OPV Mat"),s:printed}]},
+{id:"s4",t:"Laminasiya",s:()=>qat()>=2,f:[
+ {sub:"Laminasiya 1"},
+ {k:"lm1",l:"Materialın növü",t:"select",o:LM,w:2},
+ {k:"qal2",l:"Qalınlıq 2 (mic)",t:"select",o:mic},
+ {k:"kod2",l:"Xammalın kodu",t:"text"},
+ {k:"den2",l:"Density (q/sm³)",t:"number"},
+ {sub:"Laminasiya 2",s:()=>qat()===3},
+ {k:"lm2",l:"Materialın növü",t:"select",o:LM,w:2,s:()=>qat()===3},
+ {k:"qal3",l:"Qalınlıq 3 (mic)",t:"select",o:mic,s:()=>qat()===3},
+ {k:"kod3",l:"Xammalın kodu",t:"text",s:()=>qat()===3},
+ {k:"den3",l:"Density (q/sm³)",t:"number",s:()=>qat()===3}]},
+{id:"s5",t:"Məhsul və qablaşdırma",f:[
+ {k:"mehsul",l:"Məhsul növü",t:"select",o:L("Açıq|Boru"),r:1},
+ {k:"sifnov",l:"Sifariş növü",t:"select",o:L("Sticker|Sleeve|Etiket|Ambalaj|Wraparound|Sadə paket|Çörək paketi"),r:1},
+ {k:"istif",l:"İstifadə şəkli",t:"select",o:L("Rulon|Əl etiketi|Çörək paketi|Sadə paket")},
+ {k:"bicaq",l:"Bıçaq növü",t:"select",o:L("Taxta|Manyetik|Tabaka")},
+ {k:"yapen",l:"Yapışma eni (mm)",t:"number"},
+ {k:"yapuz",l:"Yapışma uzunluğu (mm)",t:"number"},
+ {k:"perf",l:"Perforasiya",t:"select",o:L("Düz|Formalı")},
+ {k:"acil",l:"Açılış yönü",t:"select",o:L("Variant 1|Variant 2|Variant 3|Variant 4")},
+ {k:"bobin",l:"Bobin yönü",t:"select",o:L("Üstə|Altdə")},
+ {k:"teslim",l:"Təslim tarixi",t:"date",r:1},
+ {k:"bobcek",l:"Bobin çəki / diametr",t:"text"},
+ {k:"masura",l:"Masura ölçüsü (mm)",t:"select",o:[40,76,78,125,152]},
+ {k:"qabar",l:"Qablaşdırma şərtləri",t:"select",o:L("Streç|Qutu|Paket|Paket və Qutu")},
+ {k:"klv",l:"Klişənin vəziyyəti",t:"select",o:L("Sağlam|Köhnəlmiş|Yararsız|Yoxdur|Revize"),s:printed},
+ {k:"tesdiq",l:"Təsdiq forması",t:"select",o:L("Müştəri gələcək|Şəkil ilə|Satış nümayəndəsi|Satış təsdiqi|Göndərilən nümunə|Keyfiyyət meneceri|Müştəriyə göndəriləcək|Kromalin ilə")},
+ {k:"koruk",l:"Körük (sm)",t:"number",s:()=>S.sifnov==="Çörək paketi"||S.sifnov==="Sadə paket"},
+ {k:"rengad",l:"Rəng adları",t:"text",w:2,s:printed}]},
+{id:"s6",t:"Çap hazırlıqları",s:printed,custom:"units"},
+{id:"s7",t:"Hesablamalar",custom:"calc"}
+];
+let S={};var REQ=[];
+const $=s=>document.querySelector(s);
+const esc=v=>String(v==null?"":v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+function field(f){
+ if(f.sub)return `<div class="sub" data-sub="${esc(f.sub)}">${f.sub}</div>`;
+ const v=S[f.k]||"";let inp;
+ if(f.t==="select")inp=`<select id="${f.k}" data-k="${f.k}"><option value="">Seçin</option>${f.o.map(o=>`<option${String(o)===String(v)?" selected":""}>${o}</option>`).join("")}</select>`;
+ else inp=`<input id="${f.k}" data-k="${f.k}" type="${f.t}" value="${esc(v)}"${f.ro?" readonly":""}${f.t==="number"?' min="0" step="any" inputmode="decimal"':""}>`;
+ return `<div class="f${f.w?" w2":""}" id="f-${f.k}"><label for="${f.k}"${f.r?' class="req"':""}>${f.l}</label>${inp}</div>`;
 }
-buttons.forEach((b,i)=>b.addEventListener("click",()=>{
- if(!visible(i))return;
- targetIndex=i;lockUntil=Date.now()+1100;activate(i);
- const top=window.scrollY+panes[i].getBoundingClientRect().top-nav.getBoundingClientRect().bottom-12;
- window.scrollTo({top:Math.max(0,top),behavior:"smooth"});
-}));
-nav.addEventListener("wheel",e=>{
- if(nav.scrollWidth<=nav.clientWidth)return;
- if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){e.preventDefault();nav.scrollLeft+=e.deltaX;}
- else if(e.shiftKey){e.preventDefault();nav.scrollLeft+=e.deltaY;}
-},{passive:false});
-function onScroll(){
- if(scheduled)return;scheduled=true;
- requestAnimationFrame(()=>{
-  scheduled=false;
-  if(targetIndex>=0&&Date.now()<lockUntil)return;
-  targetIndex=-1;
-  const y=nav.getBoundingClientRect().bottom+24;
-  let index=panes.findIndex((p,i)=>visible(i));
-  panes.forEach((p,i)=>{if(visible(i)&&p.getBoundingClientRect().top<=y)index=i;});
-  if(index>=0)activate(index);
+function build(){$("#form").innerHTML=SEC.map((s,i)=>{
+ let b;
+ if(s.custom==="units")b=`<div class="tw"><table><thead><tr><th>Unit</th><th>Rəng</th><th>Tərkib miqdarı</th><th>Tesa</th><th>Anilox</th><th>Viscose</th></tr></thead><tbody id="ub"></tbody></table></div><p class="hint">Sətirlərin sayı rəng sayına görə avtomatik qurulur (2+1 = 3 unit).</p>`;
+ else if(s.custom==="calc")b=`<div class="res" id="res"></div><ul class="mat" id="mat"></ul>`;
+ else b=`<div class="grid">${s.f.map(field).join("")}</div>`;
+ return `<section id="${s.id}"><h2>${i+1}. ${s.t}</h2>${b}</section>`}).join("");}build();
+$("#nav").innerHTML=SEC.map((s,i)=>`<a href="#${s.id}" data-n="${s.id}">${i+1}. ${s.t}<small></small></a>`).join("");
+const n=x=>parseFloat(x)||0;
+const fmt=(v,d=2)=>v?v.toLocaleString("en",{maximumFractionDigits:d}):"—";
+const unitCount=()=>{if(!printed()||!S.reng)return 0;return S.reng.split("+").reduce((a,b)=>a+n(b),0)};
+function renderUnits(){
+ const c=unitCount(),tb=$("#ub");if(!tb)return;
+ if(tb.rows.length===c)return;
+ let h="";for(let i=1;i<=c;i++)h+=`<tr><td>Unit ${i}</td>`+["rg","tk","te","an","vi"].map(x=>`<td><input data-k="u${i}${x}" value="${esc(S["u"+i+x])}" aria-label="Unit ${i} ${x}"></td>`).join("")+"</tr>";
+ tb.innerHTML=h||`<tr><td colspan="6" class="hint">Rəng sayını seçin.</td></tr>`;
+}
+function refresh(){
+ SEC.forEach(s=>{
+  if(s.s)$("#"+s.id).hidden=!s.s();
+  (s.f||[]).forEach(f=>{
+   const el=f.sub?document.querySelector(`[data-sub="${f.sub}"]`):$("#f-"+f.k);
+   if(el&&f.s)el.hidden=!f.s()});
  });
+ S.skod=(S.mkod||"")+(S.msira?"-"+String(S.msira).padStart(3,"0"):"");
+ $("#skod").value=S.skod;
+ renderUnits();
+ const lay=qat()||1;
+ const mats=[[S.capmat,S.qal1,S.den1,S.kod1],[S.lm1,S.qal2,S.den2,S.kod2],[S.lm2,S.qal3,S.den3,S.kod3]].slice(0,lay);
+ const g=mats.map(m=>n(m[1])*n(m[2]));
+ const tot=g.reduce((a,b)=>a+b,0);
+ const area=n(S.eni)*n(S.uzun)/1e6,W=n(S.meni)/1000;
+ const perM=g.map(x=>x*W),sumM=perM.reduce((a,b)=>a+b,0);
+ const pct=i=>tot?g[i]/tot*100:0;
+ const r=[["Metrekare (m²)",area*n(S.miqdar)],["Hər paket (qr)",area*tot],["Paket sayı",n(S.miqdar),0],["1 m = qr (material 1)",perM[0]],["1 m = qr (lam. 1)",lay>=2?perM[1]:0],["1 m = qr (lam. 2)",lay>=3?perM[2]:0],["Material 1, %",pct(0),1],["Lam. 1, %",lay>=2?pct(1):0,1],["Lam. 2, %",lay>=3?pct(2):0,1],["1 kq = m (ümumi)",sumM?1000/sumM:0],["Ümumi çəki (kq)",area*n(S.miqdar)*tot/1000]];
+ $("#res").innerHTML=r.map(x=>`<div><span>${x[0]}</span><b>${fmt(x[1],x[2]==null?2:x[2])}</b></div>`).join("");
+ $("#mat").innerHTML=mats.map((m,i)=>`<li><b>Material-${i+1}:</b> ${m[0]?esc(m[0]):"—"}${m[1]?" · "+m[1]+" mic":""}${m[3]?" · kod "+esc(m[3]):""}</li>`).join("");
+ const req=[];SEC.forEach(s=>(s.f||[]).forEach(f=>{if(f.r&&(!f.s||f.s())&&(!s.s||s.s())&&!(S[f.k]||"").toString().trim())req.push(f.l)}));
+ if(S.tarix&&S.teslim&&S.teslim<S.tarix)req.push("Təslim tarixi sifariş tarixindən əvvəl ola bilməz");REQ=req;const total=SEC.reduce((a,s)=>a+(s.s&&!s.s()?[]:(s.f||[])).filter(f=>f.r&&(!f.s||f.s())).length,0),done=total-req.length;
+ $("#pct").textContent=Math.max(0,Math.round(done/total*100))+"%";$("#barfill").style.width=Math.max(0,done/total*100)+"%";
+ $("#miss").innerHTML=req.length?`<p class="hint" style="margin:0 0 4px">Çatışmayan məcburi sahələr:</p><ul class="miss">${req.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<p class="ok">Bütün məcburi sahələr doldurulub.</p>`;
+ SEC.forEach(s=>{const a=document.querySelector(`[data-n="${s.id}"]`);if(!a)return;
+  const rq=(s.f||[]).filter(f=>f.r&&(!f.s||f.s()));a.hidden=s.s?!s.s():false;
+  a.classList.toggle("done",rq.length>0&&rq.every(f=>(S[f.k]||"").toString().trim()));
+  a.querySelector("small").textContent=rq.length?rq.filter(f=>(S[f.k]||"").toString().trim()).length+"/"+rq.length:""});
 }
-window.addEventListener("scroll",onScroll,{passive:true});
-document.getElementById("layerCount")?.addEventListener("change",()=>requestAnimationFrame(onScroll));
-})();</script><script>document.getElementById('orderDate').value=[new Date().getFullYear(),String(new Date().getMonth()+1).padStart(2,'0'),String(new Date().getDate()).padStart(2,'0')].join('-');document.getElementById('chooseCustomer').addEventListener('click',function(){alert('Logo ERP müştəri siyahısı hələ qoşulmayıb.');});</script><script>(function(){const den={"PET Şəffaf":1.4,"PET Metalizə":1.4,"BOPP Sədəf":0.72,"BOPP Şəffaf":0.85,"BOPP Mat":0.84};for(const k of [1,2]){const m=document.getElementById("lamMaterial"+k),d=document.getElementById("lamDensity"+k);m.addEventListener("change",()=>{d.value=m.value==="-"?"":(den[m.value]??0.92)});}})();</script><script>(function(){const get=id=>document.getElementById(id)?.value||"";function refresh(){const width=get("materialWidth")||"0";for(const [n,m,t] of [[1,"printMaterial","printThickness"],[2,"lamMaterial1","lamThickness1"],[3,"lamMaterial2","lamThickness2"]]){const name=get(m);document.getElementById("materialSummary"+n).value=(name&&name!=="-"?name:"-")+" "+(get(t)||"0")+" mic "+width+" mm";}}for(const id of ["materialWidth","printMaterial","printThickness","lamMaterial1","lamThickness1","lamMaterial2","lamThickness2"]){document.getElementById(id)?.addEventListener("input",refresh);document.getElementById(id)?.addEventListener("change",refresh)}refresh()})();</script><script>(function(){const v=id=>document.getElementById(id)?.value||"",n=id=>parseFloat(v(id))||0,show=(id,x)=>document.getElementById(id).textContent=Number.isFinite(x)?String(+x.toFixed(4)):"—";function calc(){const area=n("designWidth")*n("designLength")/100;const pack=area*n("orderThickness")*n("density")/10000;const width=n("materialWidth");const layers={"Tək qat":1,"İki qat":2,"Üç qat":3}[v("layerCount")]||0;const grams=[[n("printThickness"),n("density"),v("printMaterial")],[n("lamThickness1"),n("lamDensity1"),v("lamMaterial1")],[n("lamThickness2"),n("lamDensity2"),v("lamMaterial2")]].map(([mic,d,mat],i)=>i<layers&&mat&&mat!=="-"?width*10*mic/10000*d:0);const total=grams.reduce((a,b)=>a+b,0);show("calcArea",area);show("calcPackGram",pack);show("calcPackCount",pack?1000/pack:NaN);grams.forEach((g,i)=>{show("calcGram"+(i+1),g);show("calcPct"+(i+1),total?g*100/total:NaN);document.getElementById("calcMaterial"+(i+1)).textContent="Material-"+(i+1)+": "+(i>=layers?"- 0 mic 0 mm":v("materialSummary"+(i+1)))});show("calcKgMeter",total?1000/total:NaN)}document.addEventListener("input",calc);document.addEventListener("change",()=>setTimeout(calc,0));calc()})();</script><script>(function(){const key="atapark_order_draft_v1";const root=document.getElementById("wizard-panes");const fields=()=>[...root.querySelectorAll("input,select,textarea")].filter(e=>!e.readOnly&&!e.disabled);try{const saved=JSON.parse(localStorage.getItem(key)||"null");if(saved){fields().forEach(e=>{const id=e.id||e.name;if(!id||!(id in saved))return;if(e.type==="checkbox")e.checked=Array.isArray(saved[id])&&saved[id].includes(e.value);else if(e.type==="radio")e.checked=saved[id]===e.value;else e.value=saved[id];e.dispatchEvent(new Event("change",{bubbles:true}));});}}catch(e){}document.getElementById("saveOrderBtn").addEventListener("click",()=>{const data={};fields().forEach(e=>{const id=e.id||e.name;if(!id)return;if(e.type==="checkbox"){if(!Array.isArray(data[id]))data[id]=[];if(e.checked)data[id].push(e.value);}else if(e.type==="radio"){if(e.checked)data[id]=e.value;}else data[id]=e.value;});const status=document.getElementById("saveStatus");try{localStorage.setItem(key,JSON.stringify(data));status.textContent="Bu brauzerdə yadda saxlanıldı.";}catch(e){status.textContent="Yadda saxlamaq mümkün olmadı.";}});})();</script><script>(function(){const save=document.getElementById("saveOrderBtn");document.getElementById("saveOrderProxy").addEventListener("click",()=>save.click());document.getElementById("saveAndContinueBtn").addEventListener("click",()=>{save.click();const panes=[...document.querySelectorAll(".wizard-pane")].filter(p=>getComputedStyle(p).display!=="none");const y=document.getElementById("wizard").getBoundingClientRect().bottom+25;let current=0;panes.forEach((p,i)=>{if(p.getBoundingClientRect().top<=y)current=i;});(panes[Math.min(current+1,panes.length-1)]).scrollIntoView({behavior:"smooth",block:"start"});});document.getElementById("clearOrderBtn").addEventListener("click",()=>{if(!confirm("Formadakı məlumatları təmizləmək istəyirsiniz?"))return;localStorage.removeItem("atapark_order_draft_v1");document.querySelectorAll("#wizard-panes input,#wizard-panes select,#wizard-panes textarea").forEach(e=>{if(e.readOnly)return;if(e.type==="checkbox"||e.type==="radio")e.checked=false;else if(e.tagName==="SELECT")e.selectedIndex=0;else e.value="";e.dispatchEvent(new Event("change",{bubbles:true}));});document.getElementById("saveStatus").textContent="Forma təmizləndi.";});})();</script><script>(function(){
-const layer=document.getElementById("layerCount"),pane=document.querySelector('.wizard-pane[data-step="3"]'),nav=document.querySelectorAll(".wiz-step")[3],grid=pane.querySelector(".fields");
-const children=[...grid.children],group1=children.slice(0,5),group2=children.slice(5,10);
-function update(){
- const count={"Tək qat":1,"İki qat":2,"Üç qat":3}[layer.value]||0;
- pane.hidden=count<2;
- nav.hidden=count<2;
- group1.forEach(el=>el.style.display=count>=2?"":"none");
- group2.forEach(el=>el.style.display=count>=3?"":"none");
- for(const k of [1,2]){const active=count>k;const summary=document.getElementById("materialSummary"+(k+1));if(summary&&!active)summary.value="- 0 mic 0 mm";}
- document.dispatchEvent(new Event("input",{bubbles:false}));
+function setDen(k,mk){const d=dens(S[mk]);if(d){S[k]=d;const e=$("#"+k);if(e)e.value=d}}
+$("#form").addEventListener("input",e=>{
+ const k=e.target.dataset.k;if(!k)return;
+ S[k]=e.target.value;
+ if(k==="capmat")setDen("den1","capmat");
+ if(k==="lm1")setDen("den2","lm1");
+ if(k==="lm2")setDen("den3","lm2");
+ if(k==="qat"&&qat()<3){S.lm2=S.qal3=S.kod3=S.den3="";}
+ if(k==="qat"&&qat()<2){S.lm1=S.qal2=S.kod2=S.den2="";}
+ refresh();
+});
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800)}
+$("#print").onclick=()=>window.print();
+if(!S.tarix){S.tarix=new Date().toISOString().slice(0,10);$("#tarix").value=S.tarix}
+const NAMES={dash:"İdarə paneli",prod:"Məhsullar",stock:"Anbar",mfg:"İstehsalat",rep:"Hesabatlar"};
+let O=[];try{O=JSON.parse(localStorage.getItem("ataOrders")||"[]")}catch(e){}
+const saveO=()=>{try{localStorage.setItem("ataOrders",JSON.stringify(O));return 1}catch(e){toast("Yadda saxlamaq mümkün olmadı")}};
+function newOrder(){S={tarix:new Date().toISOString().slice(0,10)};build();refresh()}
+function openOrder(id){const o=O.find(x=>x.id===id);if(!o)return;S={...o.d,_id:o.id};build();refresh();show("new")}
+function renderList(){
+ const q=($("#q").value||"").toLowerCase();
+ $("#st").innerHTML=[["Ümumi sifariş",O.length],["Hazır",O.filter(o=>o.done).length],["Qaralama",O.filter(o=>!o.done).length]].map(x=>`<div><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ const rows=O.filter(o=>[o.d.skod,o.d.sirket,o.d.sad].join(" ").toLowerCase().includes(q));
+ $("#lb").innerHTML=rows.map(o=>`<tr><td>${esc(o.d.skod||"—")}</td><td>${esc(o.d.sirket)}</td><td>${esc(o.d.sad)}</td><td>${esc(o.d.tarix)}</td><td>${esc(o.d.teslim)}</td><td><span class="tag ${o.done?"g":"o"}">${o.done?"Hazır":"Qaralama"}</span></td><td><button data-open="${o.id}">Aç</button> <button data-del="${o.id}">Sil</button></td></tr>`).join("")||`<tr><td colspan="7" class="hint">${O.length?"Nəticə tapılmadı.":"Hələ sifariş yoxdur. “Yeni sifariş” düyməsi ilə başlayın."}</td></tr>`;
 }
-layer.addEventListener("change",update);
-update();
-})();</script></body></html>
+function show(v){
+ const k=v==="new"||v==="list"?v:"soon";
+ ["new","list","soon"].forEach(x=>$("#v-"+x).hidden=x!==k);
+ document.querySelectorAll(".mi").forEach(m=>m.classList.toggle("on",m.dataset.v===v));
+ $("#crumb").innerHTML=k==="soon"?`<b>${NAMES[v]}</b>`:`Satış sifarişləri / <b>${v==="new"?(S._id?"Düzəliş":"Yeni sifariş"):"Sifarişlər siyahısı"}</b>`;
+ $("#topNew").hidden=v==="new";
+ if(k==="soon")$("#soonT").textContent=NAMES[v];
+ if(v==="list")renderList();
+ if(v==="new")document.querySelector("header h1").textContent=S._id?"Sifarişə düzəliş":"Yeni satış sifarişi";
+ window.scrollTo(0,0)}
+$("#side").onclick=e=>{const b=e.target.closest(".mi");if(!b)return;if(b.dataset.v==="new"&&S._id)newOrder();show(b.dataset.v)};
+$("#topNew").onclick=()=>{newOrder();show("new")};
+$("#q").oninput=renderList;
+$("#lb").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.open)openOrder(+b.dataset.open);
+ if(b.dataset.del&&confirm("Sifariş silinsin?")){O=O.filter(o=>o.id!==+b.dataset.del);saveO();renderList()}};
+$("#save").onclick=()=>{
+ if(!S.sirket&&!S.sad){toast("Şirkət və ya sifariş adını yazın");return}
+ const id=S._id||Date.now();S._id=id;
+ const rec={id,d:{...S},done:!REQ.length};
+ const i=O.findIndex(o=>o.id===id);if(i>=0)O[i]=rec;else O.unshift(rec);
+ if(saveO())toast(rec.done?"Sifariş saxlandı":"Qaralama kimi saxlandı")};
+$("#reset").onclick=()=>{if(confirm("Bütün sahələr təmizlənsin?")){newOrder();toast("Forma təmizləndi")}};
+refresh();show("new");
+</script>
+</body>
+</html>
