@@ -374,6 +374,8 @@ function refresh(){
    const el=f.sub?document.querySelector(`[data-sub="${f.sub}"]`):$("#f-"+f.k);
    if(el&&f.s)el.hidden=!f.s()});
  });
+ const thirdLayer=$("#lamination-third");
+ if(thirdLayer)thirdLayer.hidden=qat()!==3;
  S.skod=(S.mkod||"")+(S.msira?"-"+String(S.msira).padStart(3,"0"):"");
  $("#skod").value=S.skod;
  renderUnits();
